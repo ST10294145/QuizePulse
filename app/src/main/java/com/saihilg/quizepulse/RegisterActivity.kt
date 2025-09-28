@@ -41,6 +41,9 @@ fun RegisterScreen() {
         modifier = Modifier
             .fillMaxSize()
             .background(Brush.verticalGradient(listOf(Color(0xFF1A237E), Color(0xFF00BCD4))))
+        //code attribute for color gradient background
+        //https://medium.com/@bimurat.mukhtar/how-to-implement-linear-gradient-with-any-angle-in-jetpack-compose-3ded798c81f5
+        // Author:Mukhtar Bimurat
     ) {
         Column(
             modifier = Modifier
