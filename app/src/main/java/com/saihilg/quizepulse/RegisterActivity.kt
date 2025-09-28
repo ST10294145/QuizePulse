@@ -1,12 +1,10 @@
 package com.saihilg.quizepulse
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
@@ -15,30 +13,29 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.saihilg.quizepulse.ui.theme.QuizePulseTheme
 
-class MainActivity : ComponentActivity() {
+class RegisterActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             QuizePulseTheme {
-                LoginScreen()
+                RegisterScreen()
             }
         }
     }
 }
 
 @Composable
-fun LoginScreen() {
+fun RegisterScreen() {
     var name by remember { mutableStateOf(TextFieldValue("Jiara Martins")) }
     var email by remember { mutableStateOf(TextFieldValue("hello@reallygreatsite.com")) }
-    val context = LocalContext.current
+    var password by remember { mutableStateOf(TextFieldValue("******")) }
 
     Box(
         modifier = Modifier
@@ -53,16 +50,18 @@ fun LoginScreen() {
         ) {
             Spacer(modifier = Modifier.weight(1f))
             Text(
-                text = "Login",
+                text = "Create new Account",
                 fontSize = 32.sp,
                 color = Color.White
             )
             Text(
-                text = "Sign in to continue.",
+                text = "Already Registered? Log in here.",
                 fontSize = 16.sp,
                 color = Color.White
             )
             Spacer(modifier = Modifier.height(40.dp))
+
+            // NAME field
             OutlinedTextField(
                 value = name,
                 onValueChange = { name = it },
@@ -81,11 +80,11 @@ fun LoginScreen() {
                     focusedIndicatorColor = Color.White,
                     unfocusedIndicatorColor = Color.Gray,
                     cursorColor = Color.White
-
-
-            ),
+                ),
                 textStyle = LocalTextStyle.current.copy(color = Color.White)
             )
+
+            // EMAIL field
             OutlinedTextField(
                 value = email,
                 onValueChange = { email = it },
@@ -107,25 +106,39 @@ fun LoginScreen() {
                 ),
                 textStyle = LocalTextStyle.current.copy(color = Color.White)
             )
+
+            // PASSWORD field
+            OutlinedTextField(
+                value = password,
+                onValueChange = { password = it },
+                label = { Text("PASSWORD") },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
+                colors = TextFieldDefaults.colors(
+                    focusedContainerColor = Color.Transparent,
+                    unfocusedContainerColor = Color.Transparent,
+                    disabledContainerColor = Color.Transparent,
+                    focusedTextColor = Color.White,
+                    unfocusedTextColor = Color.White,
+                    focusedLabelColor = Color.White,
+                    unfocusedLabelColor = Color.Gray,
+                    focusedIndicatorColor = Color.White,
+                    unfocusedIndicatorColor = Color.Gray,
+                    cursorColor = Color.White
+                ),
+                textStyle = LocalTextStyle.current.copy(color = Color.White)
+            )
+
             Button(
-                onClick = { /* Static login logic */ },
+                onClick = { /* Static register logic */ },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 16.dp),
                 shape = RoundedCornerShape(8.dp)
             ) {
-                Text("Login", color = Color.White, fontSize = 16.sp)
+                Text("sign up", color = Color.White, fontSize = 16.sp)
             }
-            Text(
-                text = "Need an account? Register here.",
-                color = Color.White,
-                modifier = Modifier
-                    .padding(top = 16.dp)
-                    .clickable {
-                        val intent = Intent(context, RegisterActivity::class.java)
-                        context.startActivity(intent)
-                    }
-            )
             Spacer(modifier = Modifier.weight(1f))
         }
     }
@@ -133,8 +146,8 @@ fun LoginScreen() {
 
 @Preview(showBackground = true)
 @Composable
-fun LoginPreview() {
+fun RegisterPreview() {
     QuizePulseTheme {
-        LoginScreen()
+        RegisterScreen()
     }
 }
