@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -161,9 +162,11 @@ fun SettingsScreen() {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp),
-                shape = RoundedCornerShape(8.dp)
+                     shape = RoundedCornerShape(8.dp)
             ) {
-                Text("Save Settings", fontSize = 16.sp, color = Color.White)
+                Text("Save Settings",
+                    fontSize = 16.sp,
+                    color = Color.White)
             }
 
             Spacer(modifier = Modifier.weight(1f)) // Push content toward top
