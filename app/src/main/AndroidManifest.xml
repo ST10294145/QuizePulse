@@ -25,6 +25,10 @@
             android:name=".RegisterActivity"
             android:exported="false">
         </activity>
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="false">
+        </activity>
     </application>
 
 </manifest>
