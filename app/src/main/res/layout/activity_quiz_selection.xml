@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+android:id="@+id/main"
+    android:background="@drawable/background_gradient">
+
+<!-- App Title -->
+<TextView
+    android:id="@+id/tvTitle"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="QuizPulse"
+    android:textSize="24sp"
+    android:textStyle="bold"
+    android:textColor="@android:color/white"
+    android:layout_gravity="center"
+    android:padding="16dp" />
+
+<!-- Scroll View for quizzes -->
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:padding="8dp"
+    app:layout_constraintBottom_toTopOf="@id/bottomNavigationView">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <!-- Football Quiz -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            android:backgroundTint="#D3D3D3">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/tvFootballTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Football Quiz"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="#0096D6" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Test your knowledge on legendary players, famous matches, and World Cup history."
+                    android:textColor="@android:color/black"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="12dp" />
+
+                <Button
+                    android:id="@+id/btnFootballQuiz"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Start Quiz"
+                    android:backgroundTint="@android:color/black"
+                    android:textColor="@android:color/white"
+                    android:padding="8dp"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Music Quiz -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            android:backgroundTint="#D3D3D3">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/tvMusicTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Music Quiz"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="#0096D6" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Challenge yourself with trivia on hit songs, iconic artists, and unforgettable albums."
+                    android:textColor="@android:color/black"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="12dp" />
+
+                <Button
+                    android:id="@+id/btnMusicQuiz"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Start Quiz"
+                    android:backgroundTint="@android:color/black"
+                    android:textColor="@android:color/white"
+                    android:padding="8dp"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Pop Culture Quiz -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            android:backgroundTint="#D3D3D3">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/tvPopCultureTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pop Culture Quiz"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="#009688" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="See how well you know viral trends and celebrity moments."
+                    android:textColor="@android:color/black"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="12dp" />
+
+                <Button
+                    android:id="@+id/btnPopCultureQuiz"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Start Quiz"
+                    android:backgroundTint="@android:color/black"
+                    android:textColor="@android:color/white"
+                    android:padding="8dp"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+</ScrollView>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/black"
+        app:itemIconTint="@android:color/white"
+        app:itemTextColor="@android:color/white"
+        app:menu="@menu/bottom_nav_menu"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+</LinearLayout>
