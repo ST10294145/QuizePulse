@@ -12,7 +12,20 @@
           "package_name": "com.saihilg.quizepulse"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "472900904001-i8h8dgcl0gb0f1nf4vn99t3kl5c52u0g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.saihilg.quizepulse",
+            "certificate_hash": "2d9e231809d1504349796a0b6407dca1d41df12d"
+          }
+        },
+        {
+          "client_id": "472900904001-31lqmeajv2llrlqolajl7bh03npghj3u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAdjnIMm7DYib2XCQSV5TJ9UPHA8HugvEI"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "472900904001-31lqmeajv2llrlqolajl7bh03npghj3u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

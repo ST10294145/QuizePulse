@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">QuizePulse</string>
+    <string name="default_web_client_id">472900904001-i8h8dgcl0gb0f1nf4vn99t3kl5c52u0g.apps.googleusercontent.com</string>
 </resources>
+
