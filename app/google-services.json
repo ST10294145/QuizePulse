@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "472900904001",
+    "project_id": "quizpulse-app-8bb09",
+    "storage_bucket": "quizpulse-app-8bb09.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:472900904001:android:3dfc8d24e13d4e491692c0",
+        "android_client_info": {
+          "package_name": "com.saihilg.quizepulse"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdjnIMm7DYib2XCQSV5TJ9UPHA8HugvEI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
