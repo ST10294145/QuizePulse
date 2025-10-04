@@ -3,6 +3,7 @@ package com.saihilg.quizepulse
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageButton
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -13,6 +14,8 @@ class QuizSelection : AppCompatActivity() {
     private lateinit var btnFootballQuiz: Button
     private lateinit var btnMusicQuiz: Button
     private lateinit var btnPopCultureQuiz: Button
+
+    private lateinit var btnSettings: ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,5 +51,11 @@ class QuizSelection : AppCompatActivity() {
             intent.putExtra("quiz_type", "popculture")
             startActivity(intent)
         }
+
+        val btnSettings = findViewById<ImageButton>(R.id.btnSettings)
+        btnSettings.setOnClickListener {
+            startActivity(Intent(this, SettingsActivity::class.java))
+        }
+
     }
 }

@@ -13,10 +13,12 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.SignInButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
-import com.google.android.gms.common.SignInButton
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FieldValue
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -28,6 +30,7 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var btnGoogleSignIn: SignInButton
 
     private lateinit var mAuth: FirebaseAuth
+    private lateinit var db: FirebaseFirestore
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var googleSignInLauncher: ActivityResultLauncher<Intent>
 
@@ -37,6 +40,7 @@ class RegisterActivity : AppCompatActivity() {
 
         // Firebase
         mAuth = FirebaseAuth.getInstance()
+        db = FirebaseFirestore.getInstance()
 
         // Views
         etName = findViewById(R.id.et_name)
@@ -44,11 +48,11 @@ class RegisterActivity : AppCompatActivity() {
         etPassword = findViewById(R.id.et_password)
         btnSignup = findViewById(R.id.btn_signup)
         tvSubtitle = findViewById(R.id.tv_subtitle)
-        btnGoogleSignIn = findViewById(R.id.btnGoogleSignIn) // Make sure this exists in your XML
+        btnGoogleSignIn = findViewById(R.id.btnGoogleSignIn)
 
         // Configure Google Sign-In
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id)) // From Firebase console
+            .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
 
@@ -67,7 +71,6 @@ class RegisterActivity : AppCompatActivity() {
 
         // Button listeners
         btnSignup.setOnClickListener { registerUser() }
-
         btnGoogleSignIn.setOnClickListener {
             val signInIntent = googleSignInClient.signInIntent
             googleSignInLauncher.launch(signInIntent)
@@ -105,6 +108,9 @@ class RegisterActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     val user: FirebaseUser? = mAuth.currentUser
                     if (user != null) {
+                        // Save user to Firestore
+                        saveUserToFirestore(user.uid, name, email)
+
                         Toast.makeText(this, "Account created for $name", Toast.LENGTH_SHORT).show()
                         startActivity(Intent(this, QuizSelection::class.java))
                         finish()
@@ -121,12 +127,35 @@ class RegisterActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     val user = mAuth.currentUser
-                    Toast.makeText(this, "Google Sign-In successful!", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this, QuizSelection::class.java))
-                    finish()
+                    if (user != null) {
+                        // Save Google user to Firestore
+                        saveUserToFirestore(user.uid, user.displayName ?: "No Name", user.email ?: "")
+
+                        Toast.makeText(this, "Google Sign-In successful!", Toast.LENGTH_SHORT).show()
+                        startActivity(Intent(this, QuizSelection::class.java))
+                        finish()
+                    }
                 } else {
                     Toast.makeText(this, "Google Sign-In failed: ${task.exception?.message}", Toast.LENGTH_LONG).show()
                 }
+            }
+    }
+
+    private fun saveUserToFirestore(uid: String, name: String, email: String) {
+        val userMap = hashMapOf(
+            "uid" to uid,
+            "name" to name,
+            "email" to email,
+            "createdAt" to FieldValue.serverTimestamp()
+        )
+
+        db.collection("users").document(uid)
+            .set(userMap)
+            .addOnSuccessListener {
+                // User saved successfully
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(this, "Failed to save user: ${e.message}", Toast.LENGTH_LONG).show()
             }
     }
 }
