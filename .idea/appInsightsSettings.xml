@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.saihilg.quizepulse" />
+                  <option name="mobileSdkAppId" value="1:472900904001:android:3dfc8d24e13d4e491692c0" />
+                  <option name="projectId" value="quizpulse-app-8bb09" />
+                  <option name="projectNumber" value="472900904001" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
