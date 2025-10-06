@@ -35,17 +35,21 @@ jobs:
           target: android-33
           ndk: '25.2.9519653'
 
-      # Accept licenses
+      # Accept Android licenses
       - name: Accept Android licenses
         run: yes | sdkmanager --licenses
+
+      # Build the project (optional but recommended)
+      - name: Assemble Debug Build
+        run: ./gradlew assembleDebug --stacktrace
 
       # Run unit tests
       - name: Run Unit Tests
         run: ./gradlew testDebugUnitTest --stacktrace
 
-      # Optional: Generate test reports
+      # Upload test report if it exists
       - name: Upload Test Report
-        if: always()
+        if: success() && hashFiles('app/build/reports/tests/testDebugUnitTest/index.html') != ''
         uses: actions/upload-artifact@v4
         with:
           name: test-results
