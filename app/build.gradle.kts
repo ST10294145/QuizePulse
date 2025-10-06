@@ -54,6 +54,16 @@ dependencies {
     // Google Sign-In
     implementation("com.google.android.gms:play-services-auth:20.7.0")
 
+    // Unit testing
+    testImplementation ("junit:junit:4.13.2")
+    testImplementation ("org.mockito:mockito-core:5.13.0")
+    testImplementation ("org.mockito.kotlin:mockito-kotlin:5.2.1")
+
+    // Android instrumented (UI) testing
+    androidTestImplementation ("androidx.test.ext:junit:1.2.1")
+    androidTestImplementation ("androidx.test.espresso:espresso-core:3.6.1")
+
+
     // AndroidX + Jetpack
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
