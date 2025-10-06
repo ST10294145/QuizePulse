@@ -27,7 +27,7 @@ class QuizActivity : AppCompatActivity() {
 
     private val popCultureQuestions = listOf(
         QuizQuestion("Which movie won Best Picture in 2020?", listOf("1917", "Parasite", "Joker", "Ford v Ferrari"), 1),
-        QuizQuestion("Who is known as the 'King of TikTok'?", listOf("Charli D'Amelio", "Addison Rae", "Bella Poarch", "Dixie D'Amelio"), 0)
+        QuizQuestion("Who is known as the 'Queen of TikTok'?", listOf("Charli D'Amelio", "Addison Rae", "Bella Poarch", "Dixie D'Amelio"), 0)
     )
 
     // Dynamic question list
