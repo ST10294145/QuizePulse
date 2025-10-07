@@ -1,10 +1,10 @@
 
-#📱 QuizPulse
+📱 #QuizPulse
 
 QuizPulse is an engaging quiz application designed to challenge users across various categories while providing a clean and user-friendly experience.
 Built with Kotlin in Android Studio, the app integrates Firebase Authentication and Google Sign-In (SSO) for seamless account creation and login.
 
-#🚀 Features
+🚀 #Features
 🧑‍💻 User Authentication
 
 -Email and Password Registration: Users can create an account with their email address and a secure password.
@@ -13,7 +13,7 @@ Built with Kotlin in Android Studio, the app integrates Firebase Authentication 
 
 -Firebase Authentication: All account data is securely managed and stored on Firebase.
 
-#🧠 Quiz System
+🧠 #Quiz System
 
 -Users can select from a range of quiz categories.
 
@@ -21,7 +21,7 @@ Built with Kotlin in Android Studio, the app integrates Firebase Authentication 
 
 -Scores are displayed at the end of the quiz (currently via a Toast message; will later be displayed on a scoreboard).
 
-#⚙️ Settings
+⚙️ #Settings
 
 -Users can update their email address.
 
@@ -33,7 +33,7 @@ Built with Kotlin in Android Studio, the app integrates Firebase Authentication 
 
 -Future updates will implement a persistent scoreboard to display users’ results instead of using Toast messages.
 
-#🧩 Tech Stack
+🧩 #Tech Stack
 Component |	Technology Used
 Frontend |	Kotlin (Android Studio)
 Authentication | Firebase Authentication
@@ -43,7 +43,7 @@ UI Design | XML Layouts (ConstraintLayout, LinearLayout, etc.)
 Version Control	| Git / GitHub
 
 
-#⚙️ Setup & Installation
+⚙️ #Setup & Installation
 1️⃣ Prerequisites
 
 -Android Studio (latest version recommended)
@@ -62,7 +62,7 @@ git clone https://github.com/ST10294145/QuizePulse.git
 # Connect your emulator or Android device
 # Click "Run"
 
-#🧠 How It Works
+🧠 #How It Works
 
 1. Registration / Login
 
@@ -88,7 +88,7 @@ git clone https://github.com/ST10294145/QuizePulse.git
 
 -A scoreboard will store and display the top scores from Firebase.
 
-#🧪 Future Improvements
+🧪 #Future Improvements
 
 -Display user scores on the Scoreboard screen (scoreboard.xml).
 
@@ -100,7 +100,7 @@ git clone https://github.com/ST10294145/QuizePulse.git
 
 -Add dark mode support.
 
-#🤝 Contributors
+🤝 #Contributors
 Name:
 1. ST10294145 - Saihil Gurupersad
 2. ST10311999 - Dinay Ramchander
@@ -109,6 +109,6 @@ Name:
 
 
 
-#🪪 License
+🪪 #License
 
 This project is licensed under the MIT License — you are free to use, modify, and distribute it under the same terms.
