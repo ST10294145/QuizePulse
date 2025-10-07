@@ -86,4 +86,14 @@ git clone https://github.com/ST10294145/QuizPulse.git
 ## 🪪 License
 This project is licensed under the MIT License — you are free to use, modify, and distribute it under the same terms.
 
+---
+
+## Video Demonstration
+
+<a href="https://youtu.be/17NgVmBPWAM?si=eJW1p_zqJL4YNPis" target="_blank">
+  <img src="https://img.shields.io/badge/Watch%20Demo%20Video-FF0000?style=for-the-badge&logo=youtube&logoColor=white&labelColor=FF0000" alt="Watch Demo Video" />
+</a>
+
+---
+
 
