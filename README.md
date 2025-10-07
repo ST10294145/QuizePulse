@@ -86,6 +86,4 @@ git clone https://github.com/ST10294145/QuizPulse.git
 ## 🪪 License
 This project is licensed under the MIT License — you are free to use, modify, and distribute it under the same terms.
 
----
 
-Feel free to adjust any sections as needed!
