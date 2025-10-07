@@ -1,7 +1,3 @@
-Here's an improved version of your README file for **QuizPulse**. I've enhanced the formatting, clarity, and organization to make it more engaging and user-friendly.
-
----
-
 # 📱 QuizPulse
 
 **QuizPulse** is an engaging quiz application designed to challenge users across various categories while providing a clean and user-friendly experience. Built with Kotlin in Android Studio, the app integrates Firebase Authentication and Google Sign-In (SSO) for seamless account creation and login.
