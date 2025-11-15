@@ -1,10 +1,8 @@
 package com.saihilg.quizepulse
 
+import android.content.Context
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -16,14 +14,20 @@ class SettingsActivity : AppCompatActivity() {
     private lateinit var tvEmail: TextView
     private lateinit var etDisplayName: EditText
     private lateinit var btnUpdateName: Button
-    private lateinit var etNewPassword: EditText
-    private lateinit var btnUpdatePassword: Button
+    private lateinit var spinnerLanguage: Spinner
     private lateinit var btnLogout: Button
 
     private lateinit var mAuth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
     private var currentUser: FirebaseUser? = null
     private var userId: String = ""
+
+    // Supported languages
+    private val languages = mapOf(
+        "English" to "en",
+        "Zulu" to "zu",
+        "Afrikaans" to "af"
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,8 +38,7 @@ class SettingsActivity : AppCompatActivity() {
         tvEmail = findViewById(R.id.tv_email)
         etDisplayName = findViewById(R.id.et_display_name)
         btnUpdateName = findViewById(R.id.btn_update_name)
-        etNewPassword = findViewById(R.id.et_new_password)
-        btnUpdatePassword = findViewById(R.id.btn_update_password)
+        spinnerLanguage = findViewById(R.id.spinner_language)
         btnLogout = findViewById(R.id.btn_logout)
 
         // Firebase
@@ -48,13 +51,13 @@ class SettingsActivity : AppCompatActivity() {
             loadUserInfo()
         }
 
+        setupLanguageSpinner()
+
         btnUpdateName.setOnClickListener { updateDisplayName() }
-        btnUpdatePassword.setOnClickListener { updatePassword() }
         btnLogout.setOnClickListener { logoutUser() }
     }
 
     private fun loadUserInfo() {
-        // Get user info from Firestore
         db.collection("users").document(userId)
             .get()
             .addOnSuccessListener { document ->
@@ -78,7 +81,6 @@ class SettingsActivity : AppCompatActivity() {
             return
         }
 
-        // Update Firestore
         db.collection("users").document(userId)
             .update("name", newName)
             .addOnSuccessListener {
@@ -90,26 +92,40 @@ class SettingsActivity : AppCompatActivity() {
             }
     }
 
-    private fun updatePassword() {
-        val newPassword = etNewPassword.text.toString().trim()
-        if (newPassword.length < 6) {
-            etNewPassword.error = "Password must be at least 6 characters"
-            return
-        }
+    private fun setupLanguageSpinner() {
+        val prefs = getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+        val selectedLang = prefs.getString("language_code", "en") ?: "en"
 
-        currentUser?.updatePassword(newPassword)
-            ?.addOnSuccessListener {
-                Toast.makeText(this, "Password updated successfully!", Toast.LENGTH_SHORT).show()
-                etNewPassword.text.clear()
+        val adapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_item,
+            languages.keys.toList()
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerLanguage.adapter = adapter
+
+        // Set current selection
+        val index = languages.values.toList().indexOf(selectedLang)
+        spinnerLanguage.setSelection(if (index >= 0) index else 0)
+
+        spinnerLanguage.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: android.view.View?,
+                position: Int,
+                id: Long
+            ) {
+                val langCode = languages.values.toList()[position]
+                prefs.edit().putString("language_code", langCode).apply()
             }
-            ?.addOnFailureListener { e ->
-                Toast.makeText(this, "Failed to update password: ${e.message}", Toast.LENGTH_LONG).show()
-            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
     }
 
     private fun logoutUser() {
         mAuth.signOut()
         Toast.makeText(this, "Logged out", Toast.LENGTH_SHORT).show()
-        finish() // or navigate to LoginActivity
+        finish()
     }
 }
