@@ -8,4 +8,9 @@
         android:id="@+id/nav_results"
         android:icon="@drawable/ic_results"
         android:title="Results" />
+
+    <item
+        android:id="@+id/nav_leaderboard"
+        android:icon="@drawable/ic_leaderboard"
+        android:title="Leaderboard" />
 </menu>

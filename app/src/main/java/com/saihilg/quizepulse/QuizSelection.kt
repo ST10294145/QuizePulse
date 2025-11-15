@@ -9,6 +9,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class QuizSelection : AppCompatActivity() {
 
@@ -16,6 +17,7 @@ class QuizSelection : AppCompatActivity() {
     private lateinit var btnMusicQuiz: Button
     private lateinit var btnPopCultureQuiz: Button
     private lateinit var btnSettings: ImageButton
+    private lateinit var bottomNav: BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,14 +36,32 @@ class QuizSelection : AppCompatActivity() {
         btnMusicQuiz = findViewById(R.id.btnMusicQuiz)
         btnPopCultureQuiz = findViewById(R.id.btnPopCultureQuiz)
         btnSettings = findViewById(R.id.btnSettings)
+        bottomNav = findViewById(R.id.bottomNavigationView)
 
-        // Set click listeners
+        // Set click listeners for quizzes
         btnFootballQuiz.setOnClickListener { showDifficultyDialog("football") }
         btnMusicQuiz.setOnClickListener { showDifficultyDialog("music") }
         btnPopCultureQuiz.setOnClickListener { showDifficultyDialog("popculture") }
 
         btnSettings.setOnClickListener {
             startActivity(Intent(this, SettingsActivity::class.java))
+        }
+
+        // Make BottomNavigationView functional
+        bottomNav.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_home -> {
+                    true
+                }
+
+                //TODO: Add results activity
+
+                R.id.nav_leaderboard -> {
+                    startActivity(Intent(this, LeaderboardActivity::class.java))
+                    true
+                }
+                else -> false
+            }
         }
     }
 
@@ -50,8 +70,7 @@ class QuizSelection : AppCompatActivity() {
         val options = arrayOf("Easy", "Hard")
         AlertDialog.Builder(this)
             .setTitle("Select Difficulty")
-            .setItems(options) { dialog, which ->
-                // Use lowercase to match Firestore subcollections
+            .setItems(options) { _, which ->
                 val difficulty = if (which == 0) "easy" else "hard"
                 startV2Quiz(quizType.lowercase(), difficulty)
             }

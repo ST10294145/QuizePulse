@@ -50,6 +50,11 @@
             android:name=".V2QuizActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".LeaderboardActivity"
+            android:exported="false" />
+
+
     </application>
 
 </manifest>

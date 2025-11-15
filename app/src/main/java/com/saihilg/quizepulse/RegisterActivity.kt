@@ -108,7 +108,8 @@ class RegisterActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     val user: FirebaseUser? = mAuth.currentUser
                     if (user != null) {
-                        // Save user to Firestore
+
+                        // Save user to Firestore with totalPoints = 0
                         saveUserToFirestore(user.uid, name, email)
 
                         Toast.makeText(this, "Account created for $name", Toast.LENGTH_SHORT).show()
@@ -128,8 +129,13 @@ class RegisterActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     val user = mAuth.currentUser
                     if (user != null) {
-                        // Save Google user to Firestore
-                        saveUserToFirestore(user.uid, user.displayName ?: "No Name", user.email ?: "")
+
+                        // Save Google user to Firestore with totalPoints = 0
+                        saveUserToFirestore(
+                            user.uid,
+                            user.displayName ?: "No Name",
+                            user.email ?: ""
+                        )
 
                         Toast.makeText(this, "Google Sign-In successful!", Toast.LENGTH_SHORT).show()
                         startActivity(Intent(this, QuizSelection::class.java))
@@ -146,10 +152,12 @@ class RegisterActivity : AppCompatActivity() {
             "uid" to uid,
             "name" to name,
             "email" to email,
-            "createdAt" to FieldValue.serverTimestamp()
+            "createdAt" to FieldValue.serverTimestamp(),
+            "totalPoints" to 0
         )
 
-        db.collection("users").document(uid)
+        db.collection("users")
+            .document(uid)
             .set(userMap)
             .addOnSuccessListener {
                 // User saved successfully
