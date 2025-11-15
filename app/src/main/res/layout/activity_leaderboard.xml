@@ -1,20 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:orientation="vertical"
+    android:background="@drawable/background_gradient"
+    android:padding="20dp">
 
+    <!-- Page Title -->
     <TextView
+        android:id="@+id/tvLeaderboardTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Leaderboard"
-        android:textSize="24sp"
+        android:textSize="28sp"
         android:textStyle="bold"
-        android:paddingBottom="16dp" />
+        android:textColor="@android:color/white"
+        android:layout_gravity="center_horizontal"
+        android:paddingBottom="20dp" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvLeaderboard"
+    <!-- Container with rounded background -->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="12dp"
+        android:orientation="vertical"
+        android:background="@drawable/leaderboard_card_bg">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvLeaderboard"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
 </LinearLayout>
