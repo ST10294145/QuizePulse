@@ -54,10 +54,6 @@ dependencies {
     // Google Sign-In
     implementation("com.google.android.gms:play-services-auth:20.7.0")
 
-    implementation("com.google.mlkit:translate:17.0.3")
-    implementation("com.google.mlkit:common:18.5.0")
-
-
     // Unit testing
     testImplementation ("junit:junit:4.13.2")
     testImplementation ("org.mockito:mockito-core:5.13.0")

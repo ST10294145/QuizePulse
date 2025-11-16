@@ -1,0 +1,50 @@
+<resources>
+    <string name="app_name">QuizePulse</string>
+    <string name="default_web_client_id">472900904001-i8h8dgcl0gb0f1nf4vn99t3kl5c52u0g.apps.googleusercontent.com</string>
+
+    <!-- Quiz UI -->
+    <string name="quiz_selection_title">Khetha Ukuhlolwa</string>
+    <string name="quiz_type_football">Ibhola</string>
+    <string name="quiz_type_basketball">Ibhola Lesandla</string>
+    <string name="difficulty_easy">Okulula</string>
+    <string name="difficulty_hard">Okunzima</string>
+    <string name="submit_answer">Thumela Impendulo</string>
+    <string name="finish_quiz">Qeda Ukuhlolwa</string>
+    <string name="back_to_selection">Buyela Ekukhetheni Ukuhlolwa</string>
+
+    <!-- Toasts / Messages -->
+    <string name="correct_points">Kulungile! +%1$d amaphuzu</string>
+    <string name="wrong_answer">Kuphutha! Impendulo efanele: %1$s</string>
+    <string name="please_select_answer">Sicela ukhethe impendulo</string>
+    <string name="quiz_finished_title">🎉 Ukuhlolwa Kuqediwe! 🎉</string>
+    <string name="loading_questions">Kulayisha imibuzo...</string>
+    <string name="no_questions_found">Ayikho imibuzo etholakele ku-%1$s - %2$s</string>
+    <string name="failed_to_parse_questions">Kwehlulekile ukuhlaziya imibuzo</string>
+    <string name="failed_to_fetch_questions">Kwehlulekile ukuthola imibuzo: %1$s</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Izilungiselelo</string>
+    <string name="user_name_placeholder">Igama Lomsebenzisi</string>
+    <string name="email_label">I-imeyili: %1$s</string>
+    <string name="enter_new_display_name">Faka igama elisha lokubonisa</string>
+    <string name="update_name">Buyekeza Igama</string>
+    <string name="enter_new_password">Faka iphasiwedi entsha</string>
+    <string name="update_password">Buyekeza Iphasiwedi</string>
+    <string name="select_language">Khetha Ulimi</string>
+    <string name="apply_language">Sebenzisa Ulimi</string>
+    <string name="logout">Phuma</string>
+    <string name="english">IsiNgisi</string>
+    <string name="afrikaans">IsiBhunu</string>
+    <string name="zulu">IsiZulu</string>
+
+    <!-- Error / Success Messages for SettingsActivity -->
+    <string name="enter_name_error">Sicela ufake igama</string>
+    <string name="name_updated">Igama libuyekeziwe ngempumelelo</string>
+    <string name="password_length_error">Iphasiwedi kufanele ibe nobude obungokungenani obu-6</string>
+    <string name="password_updated">Iphasiwedi ibuyekeziwe ngempumelelo</string>
+    <string name="logged_out">Kuphunywe ngempumelelo</string>
+    <string name="language_changed">Ulimi luguquliwe ngempumelelo</string>
+    <string name="failed_load_user_info">Kwehlulekile ukulayisha ulwazi lomsebenzisi: %1$s</string>
+    <string name="failed_update_name">Kwehlulekile ukubuyekeza igama: %1$s</string>
+    <string name="failed_update_password">Kwehlulekile ukubuyekeza iphasiwedi: %1$s</string>
+</resources>

@@ -17,7 +17,7 @@
             android:id="@+id/tvSettingsTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Settings"
+            android:text="@string/settings_title"
             android:textSize="24sp"
             android:textStyle="bold"
             android:textColor="@android:color/white"
@@ -43,7 +43,7 @@
                     android:id="@+id/tvUserName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="User Name"
+                    android:text="@string/user_name_placeholder"
                     android:textStyle="bold"
                     android:textSize="18sp"
                     android:textColor="@android:color/black" />
@@ -52,7 +52,7 @@
                     android:id="@+id/tv_email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Email: "
+                    android:text="@string/email_label"
                     android:textColor="@android:color/black"
                     android:textSize="16sp"
                     android:paddingTop="4dp" />
@@ -65,7 +65,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@android:color/white"
-            android:hint="Enter new display name"
+            android:hint="@string/enter_new_display_name"
             android:inputType="textPersonName"
             android:minHeight="48dp"
             android:padding="10dp"
@@ -76,39 +76,91 @@
             android:id="@+id/btn_update_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Update Name"
+            android:text="@string/update_name"
+            android:backgroundTint="@android:color/black"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="8dp" />
+
+        <!-- Update Password -->
+        <EditText
+            android:id="@+id/et_new_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@android:color/white"
+            android:hint="@string/enter_new_password"
+            android:inputType="textPassword"
+            android:minHeight="48dp"
+            android:padding="10dp"
+            android:textColor="@android:color/white"
+            android:textColorHint="#B3FFFFFF" />
+
+        <Button
+            android:id="@+id/btn_update_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/update_password"
             android:backgroundTint="@android:color/black"
             android:textColor="@android:color/white"
             android:layout_marginTop="8dp" />
 
         <!-- Language Selection -->
         <TextView
-            android:id="@+id/tv_language_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Select Language"
-            android:textSize="18sp"
+            android:text="@string/select_language"
             android:textColor="@android:color/white"
-            android:layout_marginTop="24dp"
-            android:paddingBottom="8dp"/>
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="24dp" />
 
-        <Spinner
-            android:id="@+id/spinner_language"
+        <RadioGroup
+            android:id="@+id/radioGroupLanguage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@android:color/white"
-            android:minHeight="48dp"
-            android:spinnerMode="dropdown" />
+            android:orientation="vertical"
+            android:layout_marginTop="8dp">
+
+            <RadioButton
+                android:id="@+id/rbEnglish"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/english"
+                android:textColor="@android:color/white" />
+
+            <RadioButton
+                android:id="@+id/rbAfrikaans"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/afrikaans"
+                android:textColor="@android:color/white" />
+
+            <RadioButton
+                android:id="@+id/rbZulu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/zulu"
+                android:textColor="@android:color/white" />
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/btnApplyLanguage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/apply_language"
+            android:backgroundTint="@android:color/black"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="8dp" />
 
         <!-- Logout -->
         <Button
             android:id="@+id/btn_logout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Logout"
+            android:text="@string/logout"
             android:backgroundTint="#D32F2F"
             android:textColor="@android:color/white"
-            android:layout_marginTop="32dp" />
+            android:layout_marginTop="24dp" />
 
     </LinearLayout>
 </ScrollView>

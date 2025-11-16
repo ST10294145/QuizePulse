@@ -1,5 +1,50 @@
 <resources>
     <string name="app_name">QuizePulse</string>
     <string name="default_web_client_id">472900904001-i8h8dgcl0gb0f1nf4vn99t3kl5c52u0g.apps.googleusercontent.com</string>
-</resources>
 
+    <!-- Quiz UI -->
+    <string name="quiz_selection_title">Select a Quiz</string>
+    <string name="quiz_type_football">Football</string>
+    <string name="quiz_type_basketball">Basketball</string>
+    <string name="difficulty_easy">Easy</string>
+    <string name="difficulty_hard">Hard</string>
+    <string name="submit_answer">Submit Answer</string>
+    <string name="finish_quiz">Finish Quiz</string>
+    <string name="back_to_selection">Back to Quiz Selection</string>
+
+    <!-- Toasts / Messages -->
+    <string name="correct_points">Correct! +%1$d points</string>
+    <string name="wrong_answer">Wrong! Correct answer: %1$s</string>
+    <string name="please_select_answer">Please select an answer</string>
+    <string name="quiz_finished_title">🎉 Quiz Finished! 🎉</string>
+    <string name="loading_questions">Loading questions...</string>
+    <string name="no_questions_found">No questions found for %1$s - %2$s</string>
+    <string name="failed_to_parse_questions">Failed to parse questions</string>
+    <string name="failed_to_fetch_questions">Failed to fetch questions: %1$s</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="user_name_placeholder">User Name</string>
+    <string name="email_label">Email: %1$s</string>
+    <string name="enter_new_display_name">Enter new display name</string>
+    <string name="update_name">Update Name</string>
+    <string name="enter_new_password">Enter new password</string>
+    <string name="update_password">Update Password</string>
+    <string name="select_language">Select Language</string>
+    <string name="apply_language">Apply Language</string>
+    <string name="logout">Logout</string>
+    <string name="english">English</string>
+    <string name="afrikaans">Afrikaans</string>
+    <string name="zulu">Zulu</string>
+
+    <!-- Error / Success Messages for SettingsActivity -->
+    <string name="enter_name_error">Please enter a name</string>
+    <string name="name_updated">Name updated successfully</string>
+    <string name="password_length_error">Password must be at least 6 characters</string>
+    <string name="password_updated">Password updated successfully</string>
+    <string name="logged_out">Logged out successfully</string>
+    <string name="language_changed">Language changed successfully</string>
+    <string name="failed_load_user_info">Failed to load user info: %1$s</string>
+    <string name="failed_update_name">Failed to update name: %1$s</string>
+    <string name="failed_update_password">Failed to update password: %1$s</string>
+</resources>

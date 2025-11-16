@@ -8,7 +8,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.saihilg.quizepulse.model.Question
-import com.saihilg.quizepulse.utils.TranslationManager
 
 class V2QuizActivity : AppCompatActivity() {
 
@@ -24,8 +23,6 @@ class V2QuizActivity : AppCompatActivity() {
     private var currentIndex = 0
     private var score = 0
     private var currentDifficulty = "easy"
-    private lateinit var translator: TranslationManager
-    private var selectedLangCode = "en" // default English
 
     companion object {
         private const val TAG = "V2QuizActivity"
@@ -50,12 +47,6 @@ class V2QuizActivity : AppCompatActivity() {
         val quizType = intent.getStringExtra("quiz_type")?.lowercase() ?: "football"
         val difficulty = intent.getStringExtra("difficulty")?.lowercase() ?: "easy"
         currentDifficulty = difficulty
-
-        // Get selected language from settings (SharedPreferences, for example)
-        val prefs = getSharedPreferences("settings", MODE_PRIVATE)
-        selectedLangCode = prefs.getString("language_code", "en") ?: "en"
-
-        translator = TranslationManager(this)
 
         Log.d(TAG, "Fetching questions for: $quizType / $difficulty")
 
@@ -120,42 +111,12 @@ class V2QuizActivity : AppCompatActivity() {
         }
 
         val q = questions[currentIndex]
+        tvQuestion.text = "Question ${currentIndex + 1}/${questions.size}\n\n${q.text}"
         rgOptions.clearCheck()
 
-        // Prepare the translator
-        translator.prepare("en", selectedLangCode, {
-            // Translate question text
-            translator.translate(
-                "Question ${currentIndex + 1}/${questions.size}\n\n${q.text}",
-                onSuccess = { translatedQuestion -> tvQuestion.text = translatedQuestion },
-                onFail = { tvQuestion.text = "Question ${currentIndex + 1}/${questions.size}\n\n${q.text}" }
-            )
-
-            // Translate options
-            translator.translate(q.options[0],
-                onSuccess = { translated -> rbOptionA.text = translated },
-                onFail = { rbOptionA.text = q.options[0] }
-            )
-            translator.translate(q.options[1],
-                onSuccess = { translated -> rbOptionB.text = translated },
-                onFail = { rbOptionB.text = q.options[1] }
-            )
-            translator.translate(q.options[2],
-                onSuccess = { translated -> rbOptionC.text = translated },
-                onFail = { rbOptionC.text = q.options[2] }
-            )
-
-            btnSubmit.isEnabled = true
-
-        }) { e ->
-            Log.e(TAG, "Failed to prepare translator", e)
-            // Fallback to English if translation fails
-            tvQuestion.text = "Question ${currentIndex + 1}/${questions.size}\n\n${q.text}"
-            rbOptionA.text = q.options[0]
-            rbOptionB.text = q.options[1]
-            rbOptionC.text = q.options[2]
-            btnSubmit.isEnabled = true
-        }
+        rbOptionA.apply { text = q.options[0]; visibility = android.view.View.VISIBLE }
+        rbOptionB.apply { text = q.options[1]; visibility = android.view.View.VISIBLE }
+        rbOptionC.apply { text = q.options[2]; visibility = android.view.View.VISIBLE }
 
         btnSubmit.text = if (currentIndex == questions.size - 1) "Finish Quiz" else "Submit Answer"
     }
