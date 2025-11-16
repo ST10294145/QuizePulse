@@ -21,6 +21,7 @@
 
     <!-- Toasts / Messages -->
     <string name="correct_points">Correct! +%1$d points</string>
+    <string name="question_format">Question %1$d/%2$d\n\n%3$s</string>
     <string name="wrong_answer">Wrong! Correct answer: %1$s</string>
     <string name="please_select_answer">Please select an answer</string>
     <string name="quiz_finished_title">🎉 Quiz Finished! 🎉</string>
@@ -29,6 +30,7 @@
     <string name="failed_to_parse_questions">Failed to parse questions</string>
     <string name="failed_to_fetch_questions">Failed to fetch questions: %1$s</string>
     <string name="select_difficulty">Select Difficulty</string>
+    <string name="quiz_finished_with_score">🎉 Quiz Finished! 🎉\n\nYour Score: %1$d / %2$d</string>
 
     <!-- Settings -->
     <string name="settings_title">Settings</string>

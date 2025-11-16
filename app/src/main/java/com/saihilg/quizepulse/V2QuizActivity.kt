@@ -48,9 +48,9 @@ class V2QuizActivity : AppCompatActivity() {
         btnSubmit = findViewById(R.id.btn_submit_v2)
 
         btnSubmit.isEnabled = false
-        tvQuestion.text = "Loading questions..."
+        tvQuestion.text = getString(R.string.loading_questions)
 
-        // Get quiz type & difficulty from intent
+        // Get quiz type & difficulty
         val quizType = intent.getStringExtra("quiz_type")?.lowercase() ?: "football"
         val difficulty = intent.getStringExtra("difficulty")?.lowercase() ?: "easy"
         currentDifficulty = difficulty
@@ -68,10 +68,13 @@ class V2QuizActivity : AppCompatActivity() {
             .collection(difficulty)
             .get()
             .addOnSuccessListener { result ->
-                Log.d(TAG, "Firestore success! Found ${result.size()} documents")
 
                 if (result.isEmpty) {
-                    Toast.makeText(this, "No questions found for $quizType - $difficulty", Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        this,
+                        getString(R.string.no_questions_found, quizType, difficulty),
+                        Toast.LENGTH_LONG
+                    ).show()
                     finish()
                     return@addOnSuccessListener
                 }
@@ -81,19 +84,19 @@ class V2QuizActivity : AppCompatActivity() {
                     try {
                         val questionNumber = (doc.getLong("questionNumber") ?: 0).toInt()
                         val text = doc.getString("text") ?: ""
-                        val options = (doc.get("options") as? List<*>)?.mapNotNull { it as? String }?.toMutableList() ?: mutableListOf()
+                        val options = (doc.get("options") as? List<*>)
+                            ?.mapNotNull { it as? String }
+                            ?.toMutableList() ?: mutableListOf()
                         val answerIndex = (doc.getLong("answerIndex") ?: 0).toInt()
 
                         if (text.isNotEmpty() && options.size >= 3) {
                             questions.add(Question(questionNumber, text, options, answerIndex))
                         }
-                    } catch (e: Exception) {
-                        Log.e(TAG, "Error parsing document ${doc.id}", e)
-                    }
+                    } catch (_: Exception) { }
                 }
 
                 if (questions.isEmpty()) {
-                    Toast.makeText(this, "Failed to parse questions", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, getString(R.string.failed_to_parse_questions), Toast.LENGTH_LONG).show()
                     finish()
                     return@addOnSuccessListener
                 }
@@ -102,11 +105,15 @@ class V2QuizActivity : AppCompatActivity() {
                 currentIndex = 0
                 score = 0
                 btnSubmit.isEnabled = true
+
                 showQuestion()
             }
             .addOnFailureListener { e ->
-                Log.e(TAG, "Firestore fetch failed", e)
-                Toast.makeText(this, "Failed to fetch questions: ${e.message}", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    this,
+                    getString(R.string.failed_to_fetch_questions, e.message),
+                    Toast.LENGTH_LONG
+                ).show()
                 finish()
             }
     }
@@ -118,14 +125,23 @@ class V2QuizActivity : AppCompatActivity() {
         }
 
         val q = questions[currentIndex]
-        tvQuestion.text = "Question ${currentIndex + 1}/${questions.size}\n\n${q.text}"
+        tvQuestion.text = getString(
+            R.string.question_format,
+            currentIndex + 1,
+            questions.size,
+            q.text
+        )
+
         rgOptions.clearCheck()
 
-        rbOptionA.apply { text = q.options[0]; visibility = android.view.View.VISIBLE }
-        rbOptionB.apply { text = q.options[1]; visibility = android.view.View.VISIBLE }
-        rbOptionC.apply { text = q.options[2]; visibility = android.view.View.VISIBLE }
+        rbOptionA.text = q.options[0]
+        rbOptionB.text = q.options[1]
+        rbOptionC.text = q.options[2]
 
-        btnSubmit.text = if (currentIndex == questions.size - 1) "Finish Quiz" else "Submit Answer"
+        btnSubmit.text = if (currentIndex == questions.size - 1)
+            getString(R.string.finish_quiz)
+        else
+            getString(R.string.submit_answer)
     }
 
     private fun checkAnswer() {
@@ -137,7 +153,7 @@ class V2QuizActivity : AppCompatActivity() {
         }
 
         if (selectedIndex == -1) {
-            Toast.makeText(this, "Please select an answer", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.please_select_answer), Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -152,9 +168,13 @@ class V2QuizActivity : AppCompatActivity() {
             }
             score += pointsEarned
             updateUserPoints(pointsEarned)
-            Toast.makeText(this, "Correct! +$pointsEarned points", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.correct_points, pointsEarned), Toast.LENGTH_SHORT).show()
         } else {
-            Toast.makeText(this, "Wrong! Correct answer: ${currentQuestion.options[correctIndex]}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this,
+                getString(R.string.wrong_answer, currentQuestion.options[correctIndex]),
+                Toast.LENGTH_SHORT
+            ).show()
         }
 
         currentIndex++
@@ -166,18 +186,16 @@ class V2QuizActivity : AppCompatActivity() {
 
         db.collection("users").document(uid)
             .update("totalPoints", FieldValue.increment(points.toLong()))
-            .addOnSuccessListener { Log.d(TAG, "User points updated: +$points") }
-            .addOnFailureListener { e -> Log.e(TAG, "Failed to update points", e) }
     }
 
     private fun showQuizFinished() {
-        tvQuestion.text = "🎉 Quiz Finished! 🎉\n\nScore: $score/${questions.size}"
+        tvQuestion.text = getString(R.string.quiz_finished_with_score, score, questions.size)
 
         rbOptionA.visibility = android.view.View.GONE
         rbOptionB.visibility = android.view.View.GONE
         rbOptionC.visibility = android.view.View.GONE
 
-        btnSubmit.text = "Back to Quiz Selection"
+        btnSubmit.text = getString(R.string.back_to_selection)
         btnSubmit.setOnClickListener { finish() }
     }
 }

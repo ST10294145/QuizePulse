@@ -22,6 +22,7 @@
     <!-- Toasts / Messages -->
     <string name="correct_points">Reg! +%1$d punte</string>
     <string name="wrong_answer">Verkeerd! Regte antwoord: %1$s</string>
+    <string name="question_format">Vraag %1$d/%2$d\n\n%3$s</string>
     <string name="please_select_answer">Kies asseblief \'n antwoord</string>
     <string name="quiz_finished_title">🎉 Vasvra Voltooi! 🎉</string>
     <string name="loading_questions">Laai vrae...</string>
@@ -29,6 +30,7 @@
     <string name="failed_to_parse_questions">Kon nie vrae ontleed nie</string>
     <string name="failed_to_fetch_questions">Kon nie vrae laai nie: %1$s</string>
     <string name="select_difficulty">Kies Moeilikheidsgraad</string>
+    <string name="quiz_finished_with_score">🎉 Vasvra Voltooi! 🎉\n\nJou Telling: %1$d / %2$d</string>
 
     <!-- Settings -->
     <string name="settings_title">Instellings</string>
