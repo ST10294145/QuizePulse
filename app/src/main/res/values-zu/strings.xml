@@ -16,7 +16,9 @@
     <string name="submit_answer">Thumela Impendulo</string>
     <string name="finish_quiz">Qeda Ukuhlolwa</string>
     <string name="back_to_selection">Buyela Ekukhetheni Ukuhlolwa</string>
-    <string name="select_difficulty">Select Difficulty</string>
+    <string name="score_title">Isikolo sakho:</string>
+    <string name="retake_quiz">Phinda uphendule imibuzo</string>
+    <string name="select_difficulty">Khetha Ubunzima</string>
 
     <!-- Toasts / Messages -->
     <string name="correct_points">Kulungile! +%1$d amaphuzu</string>

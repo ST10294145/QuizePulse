@@ -14,7 +14,7 @@
         android:id="@+id/tv_app_title_v2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="QuizPulse"
+        android:text="@string/app_name"
         android:textColor="@android:color/white"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -49,10 +49,11 @@
                 android:id="@+id/tv_question_text_v2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Question will appear here"
+                android:text="@string/loading_questions"
                 android:textColor="@android:color/black"
                 android:textSize="28sp"
                 android:layout_marginBottom="32dp" />
+
 
             <!-- Options -->
             <RadioGroup
@@ -68,7 +69,7 @@
                     android:layout_marginBottom="16dp"
                     android:buttonTint="@android:color/black"
                     android:minHeight="48dp"
-                    android:text="Option A"
+                    android:text="@string/start_quiz_btn"
                     android:textColor="@android:color/black"
                     android:textSize="20sp" />
 
@@ -79,7 +80,7 @@
                     android:layout_marginBottom="16dp"
                     android:buttonTint="@android:color/black"
                     android:minHeight="48dp"
-                    android:text="Option B"
+                    android:text="@string/start_quiz_btn"
                     android:textColor="@android:color/black"
                     android:textSize="20sp" />
 
@@ -90,7 +91,7 @@
                     android:layout_marginBottom="32dp"
                     android:buttonTint="@android:color/black"
                     android:minHeight="48dp"
-                    android:text="Option C"
+                    android:text="@string/start_quiz_btn"
                     android:textColor="@android:color/black"
                     android:textSize="20sp" />
 
@@ -101,7 +102,7 @@
                 android:id="@+id/btn_submit_v2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Submit Answer"
+                android:text="@string/submit_answer"
                 android:textColor="@android:color/white"
                 android:backgroundTint="@android:color/black"
                 android:paddingTop="12dp"

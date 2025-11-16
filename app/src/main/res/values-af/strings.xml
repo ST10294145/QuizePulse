@@ -15,6 +15,8 @@
     <string name="difficulty_hard">Moeilik</string>
     <string name="submit_answer">Dien Antwoord In</string>
     <string name="finish_quiz">Voltooi Vasvra</string>
+    <string name="score_title">Jou telling:</string>
+    <string name="retake_quiz">Hervat Vasvra</string>
     <string name="back_to_selection">Terug na Vasvra-keuse</string>
 
     <!-- Toasts / Messages -->
@@ -26,7 +28,7 @@
     <string name="no_questions_found">Geen vrae gevind vir %1$s - %2$s nie</string>
     <string name="failed_to_parse_questions">Kon nie vrae ontleed nie</string>
     <string name="failed_to_fetch_questions">Kon nie vrae laai nie: %1$s</string>
-    <string name="select_difficulty">Select Difficulty</string>
+    <string name="select_difficulty">Kies Moeilikheidsgraad</string>
 
     <!-- Settings -->
     <string name="settings_title">Instellings</string>
