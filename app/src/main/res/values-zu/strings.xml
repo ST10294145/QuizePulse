@@ -57,4 +57,11 @@
     <string name="failed_load_user_info">Kwehlulekile ukulayisha ulwazi lomsebenzisi: %1$s</string>
     <string name="failed_update_name">Kwehlulekile ukubuyekeza igama: %1$s</string>
     <string name="failed_update_password">Kwehlulekile ukubuyekeza iphasiwedi: %1$s</string>
+
+    <string name="nav_home">Ikhaya</string>
+    <string name="nav_results">Imiphumela</string>
+    <string name="nav_leaderboard">Ibhodi yabaphambili</string>
+
+
+
 </resources>

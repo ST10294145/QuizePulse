@@ -57,4 +57,9 @@
     <string name="failed_load_user_info">Failed to load user info: %1$s</string>
     <string name="failed_update_name">Failed to update name: %1$s</string>
     <string name="failed_update_password">Failed to update password: %1$s</string>
+
+    <string name="nav_home">Home</string>
+    <string name="nav_results">Results</string>
+    <string name="nav_leaderboard">Leaderboard</string>
+
 </resources>

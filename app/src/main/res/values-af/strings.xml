@@ -57,4 +57,9 @@
     <string name="failed_load_user_info">Kon nie gebruikersinligting laai nie: %1$s</string>
     <string name="failed_update_name">Kon naam nie opdateer nie: %1$s</string>
     <string name="failed_update_password">Kon wagwoord nie opdateer nie: %1$s</string>
+
+    <string name="nav_home">Tuisblad</string>
+    <string name="nav_results">Resultate</string>
+    <string name="nav_leaderboard">Leierbord</string>
+
 </resources>
