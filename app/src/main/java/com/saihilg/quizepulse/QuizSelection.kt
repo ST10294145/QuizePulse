@@ -74,9 +74,12 @@ class QuizSelection : AppCompatActivity() {
 
     // Function to show difficulty selection dialog
     private fun showDifficultyDialog(quizType: String) {
-        val options = arrayOf("Easy", "Hard")
+        val options = arrayOf(
+            getString(R.string.difficulty_easy),
+            getString(R.string.difficulty_hard)
+        )
         AlertDialog.Builder(this)
-            .setTitle("Select Difficulty")
+            .setTitle(getString(R.string.select_difficulty))
             .setItems(options) { _, which ->
                 val difficulty = if (which == 0) "easy" else "hard"
                 startV2Quiz(quizType.lowercase(), difficulty)

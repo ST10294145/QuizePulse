@@ -32,7 +32,7 @@
             android:layout_alignParentEnd="true"
             android:src="@drawable/ic_settings"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Settings"
+            android:contentDescription="@string/settings_title"
             tools:ignore="TouchTargetSizeCheck" />
     </RelativeLayout>
 
@@ -171,7 +171,7 @@
                         android:id="@+id/btnPopCultureQuiz"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="start_quiz_btn"
+                        android:text="@string/start_quiz_btn"
                         android:backgroundTint="@android:color/black"
                         android:textColor="@android:color/white"
                         android:padding="8dp" />

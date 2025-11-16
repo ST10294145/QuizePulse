@@ -26,6 +26,7 @@
     <string name="no_questions_found">Geen vrae gevind vir %1$s - %2$s nie</string>
     <string name="failed_to_parse_questions">Kon nie vrae ontleed nie</string>
     <string name="failed_to_fetch_questions">Kon nie vrae laai nie: %1$s</string>
+    <string name="select_difficulty">Select Difficulty</string>
 
     <!-- Settings -->
     <string name="settings_title">Instellings</string>

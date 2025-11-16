@@ -26,6 +26,7 @@
     <string name="no_questions_found">No questions found for %1$s - %2$s</string>
     <string name="failed_to_parse_questions">Failed to parse questions</string>
     <string name="failed_to_fetch_questions">Failed to fetch questions: %1$s</string>
+    <string name="select_difficulty">Select Difficulty</string>
 
     <!-- Settings -->
     <string name="settings_title">Settings</string>
