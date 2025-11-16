@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "472900904001-kvupfl9ipvuhun698ilah65hlu9geudb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.saihilg.quizepulse",
+            "certificate_hash": "3897a74e06747d87e189dbafec862f4a85786af5"
+          }
+        },
+        {
           "client_id": "472900904001-31lqmeajv2llrlqolajl7bh03npghj3u.apps.googleusercontent.com",
           "client_type": 3
         }
