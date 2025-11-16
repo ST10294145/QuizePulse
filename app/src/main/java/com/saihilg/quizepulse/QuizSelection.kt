@@ -1,5 +1,6 @@
 package com.saihilg.quizepulse
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -18,6 +19,12 @@ class QuizSelection : AppCompatActivity() {
     private lateinit var btnPopCultureQuiz: Button
     private lateinit var btnSettings: ImageButton
     private lateinit var bottomNav: BottomNavigationView
+
+    override fun attachBaseContext(newBase: Context) {
+        val prefs = newBase.getSharedPreferences("settings", Context.MODE_PRIVATE)
+        val lang = prefs.getString("lang", "en") ?: "en"
+        super.attachBaseContext(LocaleHelper.setLocale(newBase, lang))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -1,5 +1,6 @@
 package com.saihilg.quizepulse
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.widget.*
@@ -26,6 +27,12 @@ class V2QuizActivity : AppCompatActivity() {
 
     companion object {
         private const val TAG = "V2QuizActivity"
+    }
+
+    override fun attachBaseContext(newBase: Context) {
+        val prefs = newBase.getSharedPreferences("settings", Context.MODE_PRIVATE)
+        val lang = prefs.getString("lang", "en") ?: "en"
+        super.attachBaseContext(LocaleHelper.setLocale(newBase, lang))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
