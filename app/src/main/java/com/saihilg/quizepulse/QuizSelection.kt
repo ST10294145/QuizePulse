@@ -20,6 +20,10 @@ class QuizSelection : AppCompatActivity() {
     private lateinit var btnSettings: ImageButton
     private lateinit var bottomNav: BottomNavigationView
 
+    companion object {
+        private const val SETTINGS_REQUEST_CODE = 100
+    }
+
     override fun attachBaseContext(newBase: Context) {
         val prefs = newBase.getSharedPreferences("settings", Context.MODE_PRIVATE)
         val lang = prefs.getString("lang", "en") ?: "en"
@@ -51,8 +55,9 @@ class QuizSelection : AppCompatActivity() {
         btnPopCultureQuiz.setOnClickListener { showDifficultyDialog("popculture") }
 
         btnSettings.setOnClickListener {
-            startActivity(Intent(this, SettingsActivity::class.java))
+            startActivityForResult(Intent(this, SettingsActivity::class.java), SETTINGS_REQUEST_CODE)
         }
+
 
         // Make BottomNavigationView functional
         bottomNav.setOnItemSelectedListener { item ->
@@ -68,6 +73,21 @@ class QuizSelection : AppCompatActivity() {
                     true
                 }
                 else -> false
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == SETTINGS_REQUEST_CODE) {
+            // Check if language changed and recreate if needed
+            val prefs = getSharedPreferences("settings", Context.MODE_PRIVATE)
+            val currentLang = prefs.getString("lang", "en") ?: "en"
+            val savedLang = prefs.getString("last_lang", "en") ?: "en"
+
+            if (currentLang != savedLang) {
+                prefs.edit().putString("last_lang", currentLang).apply()
+                recreate()
             }
         }
     }

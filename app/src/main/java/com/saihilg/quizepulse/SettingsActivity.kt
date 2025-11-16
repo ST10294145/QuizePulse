@@ -7,6 +7,11 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
+import android.content.Intent
+import android.provider.Settings
+import androidx.biometric.BiometricManager
+
+
 
 class SettingsActivity : AppCompatActivity() {
 
@@ -30,6 +35,8 @@ class SettingsActivity : AppCompatActivity() {
     private lateinit var db: FirebaseFirestore
     private var currentUser: FirebaseUser? = null
     private var userId: String = ""
+
+    private lateinit var btnSetupBiometric: Button
 
     // Apply language before activity starts
     override fun attachBaseContext(newBase: Context) {
@@ -57,6 +64,8 @@ class SettingsActivity : AppCompatActivity() {
         rbAfrikaans = findViewById(R.id.rbAfrikaans)
         rbZulu = findViewById(R.id.rbZulu)
         btnApplyLanguage = findViewById(R.id.btnApplyLanguage)
+        btnSetupBiometric = findViewById(R.id.btnSetupBiometric)
+        btnSetupBiometric.setOnClickListener { checkBiometricSetup()}
 
         // Firebase
         mAuth = FirebaseAuth.getInstance()
@@ -161,6 +170,31 @@ class SettingsActivity : AppCompatActivity() {
             }
     }
 
+    private fun checkBiometricSetup() {
+        val biometricManager = BiometricManager.from(this)
+        when (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG)) {
+            BiometricManager.BIOMETRIC_SUCCESS -> {
+                Toast.makeText(this, "Biometrics are already set up", Toast.LENGTH_SHORT).show()
+            }
+            BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> {
+                Toast.makeText(this, "No biometric hardware available", Toast.LENGTH_SHORT).show()
+            }
+            BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> {
+                Toast.makeText(this, "Biometric hardware currently unavailable", Toast.LENGTH_SHORT).show()
+            }
+            BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
+                Toast.makeText(this, "No biometrics enrolled. Please enroll to use biometric login", Toast.LENGTH_LONG).show()
+                // Send user to enroll biometrics in system settings
+                val enrollIntent = Intent(Settings.ACTION_BIOMETRIC_ENROLL).apply {
+                    putExtra(Settings.EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED,
+                        BiometricManager.Authenticators.BIOMETRIC_STRONG)
+                }
+                startActivity(enrollIntent)
+            }
+        }
+    }
+
+
     private fun logoutUser() {
         mAuth.signOut()
         Toast.makeText(this, getString(R.string.logged_out), Toast.LENGTH_SHORT).show()
@@ -184,6 +218,8 @@ class SettingsActivity : AppCompatActivity() {
 
             // Show toast BEFORE recreating
             Toast.makeText(this, getString(R.string.language_changed), Toast.LENGTH_SHORT).show()
+
+            setResult(RESULT_OK)
 
             // Recreate activity to apply the new language
             recreate()
