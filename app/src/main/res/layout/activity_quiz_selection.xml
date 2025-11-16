@@ -19,7 +19,7 @@
             android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="QuizPulse"
+            android:text="@string/quiz_selection_title"
             android:textSize="24sp"
             android:textStyle="bold"
             android:textColor="@android:color/white"
@@ -32,7 +32,6 @@
             android:layout_alignParentEnd="true"
             android:src="@drawable/ic_settings"
             android:background="?attr/selectableItemBackgroundBorderless"
-
             android:contentDescription="Settings"
             tools:ignore="TouchTargetSizeCheck" />
     </RelativeLayout>
@@ -69,7 +68,7 @@
                         android:id="@+id/tvFootballTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Football Quiz"
+                        android:text="@string/quiz_type_football"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         android:textColor="#0096D6" />
@@ -77,7 +76,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Test your knowledge on legendary players, famous matches, and World Cup history."
+                        android:text="@string/football_description"
                         android:textColor="@android:color/black"
                         android:paddingTop="4dp"
                         android:paddingBottom="12dp" />
@@ -86,7 +85,7 @@
                         android:id="@+id/btnFootballQuiz"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Start Quiz"
+                        android:text="@string/start_quiz_btn"
                         android:backgroundTint="@android:color/black"
                         android:textColor="@android:color/white"
                         android:padding="8dp" />
@@ -112,7 +111,7 @@
                         android:id="@+id/tvMusicTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Music Quiz"
+                        android:text="@string/quiz_type_music"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         android:textColor="#0096D6" />
@@ -120,7 +119,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Challenge yourself with trivia on hit songs, iconic artists, and unforgettable albums."
+                        android:text="@string/music_description"
                         android:textColor="@android:color/black"
                         android:paddingTop="4dp"
                         android:paddingBottom="12dp" />
@@ -129,7 +128,7 @@
                         android:id="@+id/btnMusicQuiz"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Start Quiz"
+                        android:text="@string/start_quiz_btn"
                         android:backgroundTint="@android:color/black"
                         android:textColor="@android:color/white"
                         android:padding="8dp" />
@@ -155,7 +154,7 @@
                         android:id="@+id/tvPopCultureTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Pop Culture Quiz"
+                        android:text="@string/quiz_type_popculture"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         android:textColor="#009688" />
@@ -163,7 +162,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="See how well you know viral trends and celebrity moments."
+                        android:text="@string/popculture_description"
                         android:textColor="@android:color/black"
                         android:paddingTop="4dp"
                         android:paddingBottom="12dp" />
@@ -172,7 +171,7 @@
                         android:id="@+id/btnPopCultureQuiz"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Start Quiz"
+                        android:text="start_quiz_btn"
                         android:backgroundTint="@android:color/black"
                         android:textColor="@android:color/white"
                         android:padding="8dp" />

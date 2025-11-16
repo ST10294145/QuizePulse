@@ -5,7 +5,12 @@
     <!-- Quiz UI -->
     <string name="quiz_selection_title">Khetha Ukuhlolwa</string>
     <string name="quiz_type_football">Ibhola</string>
-    <string name="quiz_type_basketball">Ibhola Lesandla</string>
+    <string name="quiz_type_music">Umculo</string>
+    <string name="quiz_type_popculture">Isiko Pop</string>
+    <string name="start_quiz_btn">Qala Imibuzo</string>
+    <string name="football_description">Hlola ulwazi lwakho ngabadlali abadumile, imidlalo edumile, nomlando weNdebe Yomhlaba.</string>
+    <string name="music_description">Ziphonsele inselelo nge-trivia ezingomeni ezishisa izikhotha, abaculi abayiziqaba, nama-albhamu angeke alibaleke.</string>
+    <string name="popculture_description">Bona ukuthi wazi kahle kangakanani izitayela zegciwane kanye nezikhathi zosaziwayo.</string>
     <string name="difficulty_easy">Okulula</string>
     <string name="difficulty_hard">Okunzima</string>
     <string name="submit_answer">Thumela Impendulo</string>

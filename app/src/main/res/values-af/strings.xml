@@ -5,7 +5,12 @@
     <!-- Quiz UI -->
     <string name="quiz_selection_title">Kies \'n Vasvra</string>
     <string name="quiz_type_football">Sokker</string>
-    <string name="quiz_type_basketball">Basketbal</string>
+    <string name="quiz_type_music">Musiek</string>
+    <string name="quiz_type_popculture">Pop Kultuur</string>
+    <string name="start_quiz_btn">Begin Vasvra</string>
+    <string name="football_description">Toets jou kennis oor legendariese spelers, bekende wedstryde en Wêreldbeker-geskiedenis.</string>
+    <string name="music_description">Daag jouself uit met vasvrae oor treffers, ikoniese kunstenaars en onvergeetlike albums.</string>
+    <string name="popculture_description">Kyk hoe goed jy virale tendense en bekende oomblikke ken.</string>
     <string name="difficulty_easy">Maklik</string>
     <string name="difficulty_hard">Moeilik</string>
     <string name="submit_answer">Dien Antwoord In</string>

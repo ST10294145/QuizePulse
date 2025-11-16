@@ -5,7 +5,12 @@
     <!-- Quiz UI -->
     <string name="quiz_selection_title">Select a Quiz</string>
     <string name="quiz_type_football">Football</string>
-    <string name="quiz_type_basketball">Basketball</string>
+    <string name="quiz_type_music">Music</string>
+    <string name="quiz_type_popculture">Pop Culture</string>
+    <string name="start_quiz_btn">Start Quiz</string>
+    <string name="football_description">Test your knowledge on legendary players, famous matches, and World Cup history.</string>
+    <string name="music_description">Challenge yourself with trivia on hit songs, iconic artists, and unforgettable albums.</string>
+    <string name="popculture_description">See how well you know viral trends and celebrity moments.</string>
     <string name="difficulty_easy">Easy</string>
     <string name="difficulty_hard">Hard</string>
     <string name="submit_answer">Submit Answer</string>
