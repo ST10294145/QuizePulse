@@ -54,6 +54,8 @@ dependencies {
     // Google Sign-In
     implementation("com.google.android.gms:play-services-auth:20.7.0")
 
+    implementation("androidx.biometric:biometric:1.2.0-alpha04")
+
     // Unit testing
     testImplementation ("junit:junit:4.13.2")
     testImplementation ("org.mockito:mockito-core:5.13.0")

@@ -9,14 +9,17 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricPrompt
+import androidx.core.content.ContextCompat
 import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.SignInButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import java.util.concurrent.Executor
 
 class LoginActivity : AppCompatActivity() {
 
@@ -25,9 +28,13 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var btnLogin: Button
     private lateinit var tvRegister: TextView
     private lateinit var btnGoogleSignIn: SignInButton
+    private lateinit var btnBiometric: Button
 
     private lateinit var mAuth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
+    private lateinit var executor: Executor
+    private lateinit var biometricPrompt: BiometricPrompt
+    private lateinit var promptInfo: BiometricPrompt.PromptInfo
 
     private val RC_SIGN_IN = 1001
 
@@ -49,15 +56,15 @@ class LoginActivity : AppCompatActivity() {
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
-
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
         // Views
         etEmail = findViewById(R.id.et_email)
         etPassword = findViewById(R.id.et_password)
         btnLogin = findViewById(R.id.login_button)
-        tvRegister = findViewById(R.id.tv_register) // Add this TextView to your XML
-        btnGoogleSignIn = findViewById(R.id.btnGoogleSignIn) // Add SignInButton to XML
+        tvRegister = findViewById(R.id.tv_register)
+        btnGoogleSignIn = findViewById(R.id.btnGoogleSignIn)
+        btnBiometric = findViewById(R.id.btnBiometric) // Add this button in your XML
 
         // Email/Password login
         btnLogin.setOnClickListener { loginUser() }
@@ -69,9 +76,11 @@ class LoginActivity : AppCompatActivity() {
         }
 
         // Google Sign-In
-        btnGoogleSignIn.setOnClickListener {
-            signInWithGoogle()
-        }
+        btnGoogleSignIn.setOnClickListener { signInWithGoogle() }
+
+        // Biometric Authentication
+        setupBiometricAuth()
+        btnBiometric.setOnClickListener { showBiometricPrompt() }
     }
 
     private fun loginUser() {
@@ -118,9 +127,9 @@ class LoginActivity : AppCompatActivity() {
         if (requestCode == RC_SIGN_IN) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
-                val account: GoogleSignInAccount = task.getResult(ApiException::class.java)!!
+                val account: GoogleSignInAccount = task.getResult(Exception::class.java)!!
                 firebaseAuthWithGoogle(account)
-            } catch (e: ApiException) {
+            } catch (e: Exception) {
                 Toast.makeText(this, "Google Sign-In failed: ${e.message}", Toast.LENGTH_SHORT).show()
             }
         }
@@ -131,12 +140,53 @@ class LoginActivity : AppCompatActivity() {
         mAuth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    // Successful login
                     startActivity(Intent(this, QuizSelection::class.java))
                     finish()
                 } else {
                     Toast.makeText(this, "Authentication Failed.", Toast.LENGTH_SHORT).show()
                 }
             }
+    }
+
+    private fun setupBiometricAuth() {
+        executor = ContextCompat.getMainExecutor(this)
+        biometricPrompt = BiometricPrompt(this, executor,
+            object : BiometricPrompt.AuthenticationCallback() {
+                override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                    super.onAuthenticationError(errorCode, errString)
+                    Toast.makeText(applicationContext, "Authentication error: $errString", Toast.LENGTH_SHORT).show()
+                }
+
+                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                    super.onAuthenticationSucceeded(result)
+                    Toast.makeText(applicationContext, "Authentication succeeded!", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this@LoginActivity, QuizSelection::class.java))
+                    finish()
+                }
+
+                override fun onAuthenticationFailed() {
+                    super.onAuthenticationFailed()
+                    Toast.makeText(applicationContext, "Authentication failed", Toast.LENGTH_SHORT).show()
+                }
+            })
+
+        promptInfo = BiometricPrompt.PromptInfo.Builder()
+            .setTitle("Biometric Login")
+            .setSubtitle("Use your fingerprint or face to login")
+            .setNegativeButtonText("Cancel")
+            .build()
+    }
+
+    private fun showBiometricPrompt() {
+        val biometricManager = BiometricManager.from(this)
+        when (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG or BiometricManager.Authenticators.DEVICE_CREDENTIAL)) {
+            BiometricManager.BIOMETRIC_SUCCESS -> biometricPrompt.authenticate(promptInfo)
+            BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE ->
+                Toast.makeText(this, "No biometric hardware available", Toast.LENGTH_SHORT).show()
+            BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE ->
+                Toast.makeText(this, "Biometric hardware unavailable", Toast.LENGTH_SHORT).show()
+            BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED ->
+                Toast.makeText(this, "No biometric credentials enrolled", Toast.LENGTH_SHORT).show()
+        }
     }
 }
