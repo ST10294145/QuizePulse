@@ -97,7 +97,7 @@ class SettingsActivity : AppCompatActivity() {
             "zu" -> rbZulu.isChecked = true
         }
 
-        // --- Music switch logic (UPDATED) ---
+        // Music switch logic
         val musicOn = prefs.getBoolean("music_on", false)
         switchMusic.isChecked = musicOn
 
@@ -115,7 +115,7 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
-    // --- Firebase and user methods ---
+    // Firebase and user methods
     private fun loadUserInfo() {
         db.collection("users").document(userId)
             .get()
