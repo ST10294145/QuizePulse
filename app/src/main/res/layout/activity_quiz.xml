@@ -46,11 +46,11 @@ tools:context=".QuizActivity">
             android:id="@+id/tv_question_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
             android:text="What is the capital of France?"
             android:textColor="@android:color/black"
             android:textSize="28sp"
-            android:textStyle="normal"
-            android:layout_marginBottom="32dp"/>
+            android:textStyle="normal" />
 
         <RadioGroup
             android:id="@+id/rg_options"
@@ -108,13 +108,13 @@ tools:context=".QuizActivity">
             android:id="@+id/btn_submit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Submit Answer"
-            android:textColor="@android:color/white"
             android:backgroundTint="@android:color/black"
             android:paddingTop="12dp"
             android:paddingBottom="12dp"
+            android:text="Submit Answer"
+            android:textColor="@android:color/white"
             android:textSize="18sp"
-            app:cornerRadius="8dp"/>
+            app:cornerRadius="8dp" />
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>

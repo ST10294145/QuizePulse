@@ -146,14 +146,14 @@ class LoginActivity : AppCompatActivity() {
         // Cancel any existing work first
         WorkManager.getInstance(this).cancelUniqueWork("quizpulse_reminder")
 
-        // Schedule new periodic work - minimum interval is 15 minutes for periodic work
+        // Schedule new periodic work
         val workRequest = PeriodicWorkRequestBuilder<ScheduledNotificationWorker>(
-            5, TimeUnit.MINUTES // Changed to 15 minutes (Android minimum)
+            5, TimeUnit.MINUTES
         ).build()
 
         WorkManager.getInstance(this).enqueueUniquePeriodicWork(
             "quizpulse_reminder",
-            ExistingPeriodicWorkPolicy.REPLACE, // Changed to REPLACE to ensure new work starts
+            ExistingPeriodicWorkPolicy.REPLACE,
             workRequest
         )
 
