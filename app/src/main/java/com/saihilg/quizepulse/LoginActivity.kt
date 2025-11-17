@@ -148,7 +148,7 @@ class LoginActivity : AppCompatActivity() {
 
         // Schedule new periodic work - minimum interval is 15 minutes for periodic work
         val workRequest = PeriodicWorkRequestBuilder<ScheduledNotificationWorker>(
-            30, TimeUnit.MINUTES // Changed to 15 minutes (Android minimum)
+            5, TimeUnit.MINUTES // Changed to 15 minutes (Android minimum)
         ).build()
 
         WorkManager.getInstance(this).enqueueUniquePeriodicWork(
