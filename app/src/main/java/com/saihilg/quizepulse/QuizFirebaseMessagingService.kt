@@ -79,18 +79,14 @@ class QuizFirebaseMessagingService : FirebaseMessagingService() {
         android.util.Log.d("FCM", "Notification sent: $title - $message")
     }
 
-    override fun onNewToken(token: String) {
+   /** override fun onNewToken(token: String) {
         super.onNewToken(token)
         android.util.Log.d("FCM", "New token generated: $token")
 
-        // Send this token to your backend server to store it
-        // so you can send notifications to this specific device
-        // Example: sendTokenToServer(token)
     }
 
     // Optional: Send token to your backend
     private fun sendTokenToServer(token: String) {
-        // TODO: Implement your logic to send token to your server
-        // You can use Retrofit, Volley, or store it in Firebase Firestore
-    }
+
+    } **/
 }
