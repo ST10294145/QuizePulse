@@ -1,7 +1,10 @@
 package com.saihilg.quizepulse
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Button
@@ -11,7 +14,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -19,7 +26,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.SignInButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.messaging.FirebaseMessaging
 import java.util.concurrent.Executor
+import java.util.concurrent.TimeUnit
 
 class LoginActivity : AppCompatActivity() {
 
@@ -37,6 +46,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var promptInfo: BiometricPrompt.PromptInfo
 
     private val RC_SIGN_IN = 1001
+    private val NOTIFICATION_PERMISSION_CODE = 100
 
     override fun attachBaseContext(newBase: Context) {
         val prefs = newBase.getSharedPreferences("settings", Context.MODE_PRIVATE)
@@ -64,7 +74,13 @@ class LoginActivity : AppCompatActivity() {
         btnLogin = findViewById(R.id.login_button)
         tvRegister = findViewById(R.id.tv_register)
         btnGoogleSignIn = findViewById(R.id.btnGoogleSignIn)
-        btnBiometric = findViewById(R.id.btnBiometric) // Add this button in your XML
+        btnBiometric = findViewById(R.id.btnBiometric)
+
+        // Request notification permission
+        requestNotificationPermission()
+
+        // Get FCM Token
+        getFCMToken()
 
         // Email/Password login
         btnLogin.setOnClickListener { loginUser() }
@@ -81,6 +97,67 @@ class LoginActivity : AppCompatActivity() {
         // Biometric Authentication
         setupBiometricAuth()
         btnBiometric.setOnClickListener { showBiometricPrompt() }
+    }
+
+    private fun requestNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.POST_NOTIFICATIONS
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                    NOTIFICATION_PERMISSION_CODE
+                )
+            }
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == NOTIFICATION_PERMISSION_CODE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "Notification permission granted", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Notification permission denied", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun getFCMToken() {
+        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val token = task.result
+                android.util.Log.d("FCM_TOKEN", "Device token: $token")
+                Toast.makeText(this, "FCM Token: Check Logcat", Toast.LENGTH_SHORT).show()
+            } else {
+                android.util.Log.e("FCM_TOKEN", "Failed to get token", task.exception)
+            }
+        }
+    }
+
+    private fun scheduleNotifications() {
+        // Cancel any existing work first
+        WorkManager.getInstance(this).cancelUniqueWork("quizpulse_reminder")
+
+        // Schedule new periodic work - minimum interval is 15 minutes for periodic work
+        val workRequest = PeriodicWorkRequestBuilder<ScheduledNotificationWorker>(
+            30, TimeUnit.MINUTES // Changed to 15 minutes (Android minimum)
+        ).build()
+
+        WorkManager.getInstance(this).enqueueUniquePeriodicWork(
+            "quizpulse_reminder",
+            ExistingPeriodicWorkPolicy.REPLACE, // Changed to REPLACE to ensure new work starts
+            workRequest
+        )
+
+        android.util.Log.d("WorkManager", "Scheduled notifications every 15 minutes")
     }
 
     private fun loginUser() {
@@ -104,6 +181,10 @@ class LoginActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show()
+
+                    // Schedule notifications
+                    scheduleNotifications()
+
                     startActivity(Intent(this, QuizSelection::class.java))
                     finish()
                 } else {
@@ -140,6 +221,11 @@ class LoginActivity : AppCompatActivity() {
         mAuth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
+                    Toast.makeText(this, "Google Sign-In successful!", Toast.LENGTH_SHORT).show()
+
+                    // Schedule notifications
+                    scheduleNotifications()
+
                     startActivity(Intent(this, QuizSelection::class.java))
                     finish()
                 } else {
@@ -160,6 +246,10 @@ class LoginActivity : AppCompatActivity() {
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                     super.onAuthenticationSucceeded(result)
                     Toast.makeText(applicationContext, "Authentication succeeded!", Toast.LENGTH_SHORT).show()
+
+                    // Schedule notifications
+                    scheduleNotifications()
+
                     startActivity(Intent(this@LoginActivity, QuizSelection::class.java))
                     finish()
                 }

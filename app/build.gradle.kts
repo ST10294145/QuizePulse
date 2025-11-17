@@ -51,6 +51,9 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-firestore")
 
+    // Firebase Cloud Messaging
+    implementation("com.google.firebase:firebase-messaging")
+
     // Google Sign-In
     implementation("com.google.android.gms:play-services-auth:20.7.0")
 
@@ -65,6 +68,8 @@ dependencies {
     androidTestImplementation ("androidx.test.ext:junit:1.2.1")
     androidTestImplementation ("androidx.test.espresso:espresso-core:3.6.1")
 
+// WorkManager
+    implementation("androidx.work:work-runtime-ktx:2.8.1")
 
     // AndroidX + Jetpack
     implementation(libs.androidx.core.ktx)
