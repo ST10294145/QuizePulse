@@ -46,6 +46,9 @@
     <string name="english">IsiNgisi</string>
     <string name="afrikaans">IsiBhunu</string>
     <string name="zulu">IsiZulu</string>
+    <string name="biometric_button">Setha ukuqinisekiswa kwebhayometriki</string>
+    <string name="background_music">Umculo wemuva</string>
+    <string name="enable_background_music">Vumela umculo wemuva</string>
 
     <!-- Error / Success Messages for SettingsActivity -->
     <string name="enter_name_error">Sicela ufake igama</string>

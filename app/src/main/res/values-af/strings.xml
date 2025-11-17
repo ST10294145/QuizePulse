@@ -46,6 +46,9 @@
     <string name="english">Engels</string>
     <string name="afrikaans">Afrikaans</string>
     <string name="zulu">Zulu</string>
+    <string name="biometric_button">Stel biometriese verifikasie op</string>
+    <string name="background_music">Agtergrondmusiek</string>
+    <string name="enable_background_music">Aktiveer agtergrondmusiek</string>
 
     <!-- Error / Success Messages for SettingsActivity -->
     <string name="enter_name_error">Voer asseblief \'n naam in</string>

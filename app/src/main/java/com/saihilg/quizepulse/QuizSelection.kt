@@ -58,22 +58,30 @@ class QuizSelection : AppCompatActivity() {
             startActivityForResult(Intent(this, SettingsActivity::class.java), SETTINGS_REQUEST_CODE)
         }
 
-
-        // Make BottomNavigationView functional
+        // BottomNavigationView
         bottomNav.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.nav_home -> {
-                    true
-                }
-
-                //TODO: Add results activity
-
+                R.id.nav_home -> true
                 R.id.nav_leaderboard -> {
                     startActivity(Intent(this, LeaderboardActivity::class.java))
                     true
                 }
                 else -> false
             }
+        }
+
+        // Start background music service if enabled
+        startMusicServiceIfEnabled()
+    }
+
+    private fun startMusicServiceIfEnabled() {
+        val prefs = getSharedPreferences("settings", Context.MODE_PRIVATE)
+        val musicOn = prefs.getBoolean("music_on", false)
+
+        if (musicOn) {
+            val intent = Intent(this, MusicService::class.java)
+            intent.action = MusicService.ACTION_START
+            startService(intent)
         }
     }
 
@@ -108,7 +116,6 @@ class QuizSelection : AppCompatActivity() {
             .show()
     }
 
-    // Launch the Firestore-powered quiz activity
     private fun startV2Quiz(quizType: String, difficulty: String) {
         val intent = Intent(this, V2QuizActivity::class.java)
         intent.putExtra("quiz_type", quizType)

@@ -1,17 +1,15 @@
 package com.saihilg.quizepulse
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
-import android.content.Intent
 import android.provider.Settings
 import androidx.biometric.BiometricManager
-
-
 
 class SettingsActivity : AppCompatActivity() {
 
@@ -24,21 +22,19 @@ class SettingsActivity : AppCompatActivity() {
     private lateinit var btnUpdatePassword: Button
     private lateinit var btnLogout: Button
 
-    // Language selection views
     private lateinit var radioGroupLanguage: RadioGroup
     private lateinit var rbEnglish: RadioButton
     private lateinit var rbAfrikaans: RadioButton
     private lateinit var rbZulu: RadioButton
     private lateinit var btnApplyLanguage: Button
+    private lateinit var btnSetupBiometric: Button
+    private lateinit var switchMusic: Switch
 
     private lateinit var mAuth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
     private var currentUser: FirebaseUser? = null
     private var userId: String = ""
 
-    private lateinit var btnSetupBiometric: Button
-
-    // Apply language before activity starts
     override fun attachBaseContext(newBase: Context) {
         val prefs = newBase.getSharedPreferences("settings", Context.MODE_PRIVATE)
         val lang = prefs.getString("lang", "en") ?: "en"
@@ -65,18 +61,18 @@ class SettingsActivity : AppCompatActivity() {
         rbZulu = findViewById(R.id.rbZulu)
         btnApplyLanguage = findViewById(R.id.btnApplyLanguage)
         btnSetupBiometric = findViewById(R.id.btnSetupBiometric)
-        btnSetupBiometric.setOnClickListener { checkBiometricSetup()}
+        switchMusic = findViewById(R.id.switchMusic)
+
+        btnSetupBiometric.setOnClickListener { checkBiometricSetup() }
 
         // Firebase
         mAuth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
         currentUser = mAuth.currentUser
         userId = currentUser?.uid ?: ""
-
-        // Load user info
         if (currentUser != null) loadUserInfo()
 
-        // Set all texts dynamically from strings.xml
+        // Set texts dynamically
         tvSettingsTitle.text = getString(R.string.settings_title)
         etDisplayName.hint = getString(R.string.enter_new_display_name)
         etNewPassword.hint = getString(R.string.enter_new_password)
@@ -84,19 +80,15 @@ class SettingsActivity : AppCompatActivity() {
         btnUpdatePassword.text = getString(R.string.update_password)
         btnLogout.text = getString(R.string.logout)
         btnApplyLanguage.text = getString(R.string.apply_language)
-
-        // Set radio button texts from resources
         rbEnglish.text = getString(R.string.english)
         rbAfrikaans.text = getString(R.string.afrikaans)
         rbZulu.text = getString(R.string.zulu)
 
-        // Button listeners
         btnUpdateName.setOnClickListener { updateDisplayName() }
         btnUpdatePassword.setOnClickListener { updatePassword() }
         btnLogout.setOnClickListener { logoutUser() }
         btnApplyLanguage.setOnClickListener { applyLanguage() }
 
-        // Set current language radio button
         val prefs = getSharedPreferences("settings", Context.MODE_PRIVATE)
         val lang = prefs.getString("lang", "en") ?: "en"
         when (lang) {
@@ -104,8 +96,26 @@ class SettingsActivity : AppCompatActivity() {
             "af" -> rbAfrikaans.isChecked = true
             "zu" -> rbZulu.isChecked = true
         }
+
+        // --- Music switch logic (UPDATED) ---
+        val musicOn = prefs.getBoolean("music_on", false)
+        switchMusic.isChecked = musicOn
+
+        switchMusic.setOnCheckedChangeListener { _, isChecked ->
+            prefs.edit().putBoolean("music_on", isChecked).apply()
+
+            val intent = Intent(this, MusicService::class.java)
+            if (isChecked) {
+                intent.action = MusicService.ACTION_START
+                startService(intent)
+            } else {
+                intent.action = MusicService.ACTION_STOP
+                startService(intent)
+            }
+        }
     }
 
+    // --- Firebase and user methods ---
     private fun loadUserInfo() {
         db.collection("users").document(userId)
             .get()
@@ -118,13 +128,6 @@ class SettingsActivity : AppCompatActivity() {
                     etDisplayName.setText(name)
                 }
             }
-            .addOnFailureListener { e ->
-                Toast.makeText(
-                    this,
-                    getString(R.string.failed_load_user_info, e.message),
-                    Toast.LENGTH_LONG
-                ).show()
-            }
     }
 
     private fun updateDisplayName() {
@@ -133,20 +136,8 @@ class SettingsActivity : AppCompatActivity() {
             etDisplayName.error = getString(R.string.enter_name_error)
             return
         }
-
         db.collection("users").document(userId)
             .update("name", newName)
-            .addOnSuccessListener {
-                tvUserName.text = newName
-                Toast.makeText(this, getString(R.string.name_updated), Toast.LENGTH_SHORT).show()
-            }
-            .addOnFailureListener { e ->
-                Toast.makeText(
-                    this,
-                    getString(R.string.failed_update_name, e.message),
-                    Toast.LENGTH_LONG
-                ).show()
-            }
     }
 
     private fun updatePassword() {
@@ -155,49 +146,24 @@ class SettingsActivity : AppCompatActivity() {
             etNewPassword.error = getString(R.string.password_length_error)
             return
         }
-
         currentUser?.updatePassword(newPassword)
-            ?.addOnSuccessListener {
-                Toast.makeText(this, getString(R.string.password_updated), Toast.LENGTH_SHORT).show()
-                etNewPassword.text.clear()
-            }
-            ?.addOnFailureListener { e ->
-                Toast.makeText(
-                    this,
-                    getString(R.string.failed_update_password, e.message),
-                    Toast.LENGTH_LONG
-                ).show()
-            }
     }
 
     private fun checkBiometricSetup() {
         val biometricManager = BiometricManager.from(this)
         when (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG)) {
-            BiometricManager.BIOMETRIC_SUCCESS -> {
-                Toast.makeText(this, "Biometrics are already set up", Toast.LENGTH_SHORT).show()
-            }
-            BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> {
-                Toast.makeText(this, "No biometric hardware available", Toast.LENGTH_SHORT).show()
-            }
-            BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> {
-                Toast.makeText(this, "Biometric hardware currently unavailable", Toast.LENGTH_SHORT).show()
-            }
+            BiometricManager.BIOMETRIC_SUCCESS -> Toast.makeText(this, "Biometrics set up", Toast.LENGTH_SHORT).show()
+            BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> Toast.makeText(this, "No biometric hardware", Toast.LENGTH_SHORT).show()
+            BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> Toast.makeText(this, "Hardware unavailable", Toast.LENGTH_SHORT).show()
             BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
-                Toast.makeText(this, "No biometrics enrolled. Please enroll to use biometric login", Toast.LENGTH_LONG).show()
-                // Send user to enroll biometrics in system settings
-                val enrollIntent = Intent(Settings.ACTION_BIOMETRIC_ENROLL).apply {
-                    putExtra(Settings.EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED,
-                        BiometricManager.Authenticators.BIOMETRIC_STRONG)
-                }
+                val enrollIntent = Intent(Settings.ACTION_BIOMETRIC_ENROLL)
                 startActivity(enrollIntent)
             }
         }
     }
 
-
     private fun logoutUser() {
         mAuth.signOut()
-        Toast.makeText(this, getString(R.string.logged_out), Toast.LENGTH_SHORT).show()
         finish()
     }
 
@@ -208,20 +174,11 @@ class SettingsActivity : AppCompatActivity() {
             R.id.rbZulu -> "zu"
             else -> "en"
         }
-
         val prefs = getSharedPreferences("settings", Context.MODE_PRIVATE)
         val currentLang = prefs.getString("lang", "en") ?: "en"
-
-        // Only recreate if language actually changed
         if (selectedLang != currentLang) {
             prefs.edit().putString("lang", selectedLang).apply()
-
-            // Show toast BEFORE recreating
-            Toast.makeText(this, getString(R.string.language_changed), Toast.LENGTH_SHORT).show()
-
             setResult(RESULT_OK)
-
-            // Recreate activity to apply the new language
             recreate()
         }
     }

@@ -156,11 +156,28 @@
             android:id="@+id/btnSetupBiometric"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Setup Biometric Login"
+            android:text="@string/biometric_button"
             android:backgroundTint="@android:color/holo_blue_dark"
             android:textColor="@android:color/white"
             android:layout_marginTop="16dp"/>
 
+        <!-- Background Music Switch -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/background_music"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="24dp" />
+
+        <Switch
+            android:id="@+id/switchMusic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/enable_background_music"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="8dp" />
 
         <!-- Logout -->
         <Button
