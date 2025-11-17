@@ -2,6 +2,7 @@ package com.saihilg.quizepulse
 
 import android.content.Context
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -18,6 +19,11 @@ class V2QuizActivity : AppCompatActivity() {
     private lateinit var rbOptionB: RadioButton
     private lateinit var rbOptionC: RadioButton
     private lateinit var btnSubmit: Button
+
+    private lateinit var tvTimer: TextView
+
+    private var quizTimer: CountDownTimer? = null
+
 
     private val db = FirebaseFirestore.getInstance()
     private var questions = mutableListOf<Question>()
@@ -46,6 +52,8 @@ class V2QuizActivity : AppCompatActivity() {
         rbOptionB = findViewById(R.id.rb_option_b_v2)
         rbOptionC = findViewById(R.id.rb_option_c_v2)
         btnSubmit = findViewById(R.id.btn_submit_v2)
+        tvTimer = findViewById(R.id.tv_timer_v2)
+
 
         btnSubmit.isEnabled = false
         tvQuestion.text = getString(R.string.loading_questions)
@@ -106,6 +114,7 @@ class V2QuizActivity : AppCompatActivity() {
                 score = 0
                 btnSubmit.isEnabled = true
 
+                startQuizTimer()
                 showQuestion()
             }
             .addOnFailureListener { e ->
@@ -117,6 +126,33 @@ class V2QuizActivity : AppCompatActivity() {
                 finish()
             }
     }
+
+    private fun startQuizTimer() {
+
+        // Cancel previous timer if activity restarted
+        quizTimer?.cancel()
+
+        // Set time based on difficulty
+        val totalTime = when (currentDifficulty) {
+            "easy" -> 60000L   // 60 sec
+            "hard" -> 45000L   // 45 sec
+            else -> 60000L
+        }
+
+        quizTimer = object : CountDownTimer(totalTime, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                val seconds = millisUntilFinished / 1000
+                tvTimer.text = String.format("%02d:%02d", seconds / 60, seconds % 60)
+            }
+
+            override fun onFinish() {
+                tvTimer.text = "00:00"
+                Toast.makeText(this@V2QuizActivity, "Time is up!", Toast.LENGTH_SHORT).show()
+                showQuizFinished()
+            }
+        }.start()
+    }
+
 
     private fun showQuestion() {
         if (currentIndex >= questions.size) {
@@ -189,6 +225,8 @@ class V2QuizActivity : AppCompatActivity() {
     }
 
     private fun showQuizFinished() {
+        quizTimer?.cancel()
+
         tvQuestion.text = getString(R.string.quiz_finished_with_score, score, questions.size)
 
         rbOptionA.visibility = android.view.View.GONE
@@ -197,5 +235,6 @@ class V2QuizActivity : AppCompatActivity() {
 
         btnSubmit.text = getString(R.string.back_to_selection)
         btnSubmit.setOnClickListener { finish() }
+
     }
 }
