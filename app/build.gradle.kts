@@ -13,21 +13,45 @@ android {
         applicationId = "com.saihilg.quizepulse"
         minSdk = 29
         targetSdk = 36
-        versionCode = 1
+        versionCode = 1  // increase this before submitting
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    // APK
+    signingConfigs {
+        create("release") {
+            storeFile = file("/Users/saihilgurupersad/Desktop/keystores/my-release-key.jks")
+            storePassword = "Spirtwalker61"
+            keyAlias = "key0"
+            keyPassword = "Spirtwalker61"
+        }
+    }
+
     buildTypes {
         release {
-            isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("release")
+
+            isMinifyEnabled = true
+            isShrinkResources = true
+
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+
+            // Make sure release is NOT debuggable
+            isDebuggable = false
+        }
+
+        debug {
+            // keep debug normal
+            isMinifyEnabled = false
+            isDebuggable = true
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -69,7 +93,7 @@ dependencies {
     androidTestImplementation ("androidx.test.ext:junit:1.2.1")
     androidTestImplementation ("androidx.test.espresso:espresso-core:3.6.1")
 
-// WorkManager
+    // WorkManager
     implementation("androidx.work:work-runtime-ktx:2.8.1")
 
     // AndroidX + Jetpack
