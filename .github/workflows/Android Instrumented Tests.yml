@@ -110,7 +110,7 @@ jobs:
             adb wait-for-device
             
             timeout=300
-            while [ "$(adb shell getprop sys.boot_completed | tr -d '\r')" != "1" ]; do
+            while [ "$(adb shell getprop sys.boot_completed | tr -d '\r')" != "1" ]; done
               echo "Waiting for boot completion... ($timeout seconds remaining)"
               sleep 5
               timeout=$((timeout - 5))
