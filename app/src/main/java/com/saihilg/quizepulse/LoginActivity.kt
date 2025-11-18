@@ -166,6 +166,14 @@ class LoginActivity : AppCompatActivity() {
 
         val result = LoginValidator.validate(email, password)
 
+        if (!result.isValid) {
+            when (result.error) {
+                "Enter email" -> etEmail.error = result.error
+                "Enter password", "Password must be at least 6 characters" -> etPassword.error = result.error
+            }
+            return
+        }
+
         if (TextUtils.isEmpty(email)) {
             etEmail.error = "Enter email"
             return

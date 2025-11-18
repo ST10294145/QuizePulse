@@ -87,6 +87,17 @@ class RegisterActivity : AppCompatActivity() {
         val email = etEmail.text.toString().trim()
         val password = etPassword.text.toString().trim()
 
+        val result = RegisterValidator.validate(name, email, password)
+
+        if (!result.isValid) {
+            when (result.error) {
+                "Enter your name" -> etName.error = result.error
+                "Enter email" -> etEmail.error = result.error
+                "Password must be at least 6 characters" -> etPassword.error = result.error
+            }
+            return
+        }
+
         when {
             TextUtils.isEmpty(name) -> {
                 etName.error = "Enter your name"
