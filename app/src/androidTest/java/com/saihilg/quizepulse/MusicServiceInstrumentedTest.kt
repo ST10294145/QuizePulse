@@ -13,7 +13,6 @@ import org.junit.runner.RunWith
 
 /**
  * Instrumented test for Music Service functionality
- *
  * This test validates that:
  * 1. SharedPreferences correctly store music state
  * 2. Music service can be started and stopped
