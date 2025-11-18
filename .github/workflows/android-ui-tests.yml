@@ -28,15 +28,8 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
       
-      - name: Cleanup previous emulator processes
-        run: |
-          killall qemu-system-x86_64 || true
-          killall emulator || true
-      
-      - name: Kill and restart adb server
-        run: |
-          adb kill-server
-          adb start-server
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
       
       - name: Enable KVM (Kernel Virtual Machine)
         run: |
