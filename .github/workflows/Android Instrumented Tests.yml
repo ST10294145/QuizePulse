@@ -103,9 +103,9 @@ jobs:
           emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -memory 4096
           disable-animations: true
           script: |
-            echo "=========================================="
+           
             echo "Waiting for emulator to boot..."
-            echo "=========================================="
+            
             
             adb wait-for-device
             
@@ -120,9 +120,9 @@ jobs:
               fi
             done
             
-            echo "=========================================="
+            
             echo "Emulator booted successfully!"
-            echo "=========================================="
+           
             adb devices
             
             echo "Waiting for package manager..."
@@ -135,9 +135,9 @@ jobs:
             
             sleep 3
             
-            echo "=========================================="
+       
             echo "Running instrumented tests..."
-            echo "=========================================="
+            
             echo ""
             echo "Test Suite Includes:"
             echo "  - MusicServiceInstrumentedTest (10 tests)"
@@ -147,9 +147,9 @@ jobs:
             
             ./gradlew connectedAndroidTest --stacktrace --info
             
-            echo "=========================================="
+          
             echo "Tests completed!"
-            echo "=========================================="
+           
       
       - name: Upload test reports (HTML)
         if: always()
