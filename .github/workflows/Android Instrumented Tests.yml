@@ -6,6 +6,12 @@ on:
   pull_request:
     branches: [ main ]
 
+# Required permissions for publishing test results
+permissions:
+  contents: read
+  checks: write
+  pull-requests: write
+
 jobs:
   instrumented-tests:
     runs-on: ubuntu-latest
@@ -97,14 +103,14 @@ jobs:
           emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -memory 4096
           disable-animations: true
           script: |
-        
+            echo "=========================================="
             echo "Waiting for emulator to boot..."
-
+            echo "=========================================="
+            
             adb wait-for-device
             
-            # Wait for boot completion with timeout
             timeout=300
-            until [[ "$(adb shell getprop sys.boot_completed | tr -d '\r')" == "1" ]]; do
+            while [ "$(adb shell getprop sys.boot_completed | tr -d '\r')" != "1" ]; do
               echo "Waiting for boot completion... ($timeout seconds remaining)"
               sleep 5
               timeout=$((timeout - 5))
@@ -114,27 +120,24 @@ jobs:
               fi
             done
             
-       
+            echo "=========================================="
             echo "Emulator booted successfully!"
-    
+            echo "=========================================="
             adb devices
             
-            # Wait for system services
             echo "Waiting for package manager..."
             adb shell pm list packages > /dev/null 2>&1
             
-            # Disable animations for stable tests
             echo "Disabling animations..."
             adb shell settings put global window_animation_scale 0.0
             adb shell settings put global transition_animation_scale 0.0
             adb shell settings put global animator_duration_scale 0.0
             
-            # Give system a moment to stabilize
             sleep 3
             
-         
+            echo "=========================================="
             echo "Running instrumented tests..."
-          
+            echo "=========================================="
             echo ""
             echo "Test Suite Includes:"
             echo "  - MusicServiceInstrumentedTest (10 tests)"
@@ -144,35 +147,34 @@ jobs:
             
             ./gradlew connectedAndroidTest --stacktrace --info
             
-       
+            echo "=========================================="
             echo "Tests completed!"
-         
+            echo "=========================================="
       
-      - name: Upload test reports
+      - name: Upload test reports (HTML)
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: instrumented-test-reports
+          name: instrumented-test-reports-html
           path: |
             **/build/reports/androidTests/
-            **/build/outputs/androidTest-results/
           retention-days: 30
       
       - name: Upload test results (XML)
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: test-results-xml
+          name: instrumented-test-results-xml
           path: |
+            **/build/outputs/androidTest-results/
             **/build/test-results/
           retention-days: 30
       
-      - name: Publish test results
+      - name: Publish test results summary
         if: always()
         uses: EnricoMi/publish-unit-test-result-action@v2
         with:
           files: |
-            **/build/test-results/**/*.xml
             **/build/outputs/androidTest-results/**/*.xml
           check_name: 'Instrumented Test Results'
           comment_mode: off
