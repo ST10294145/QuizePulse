@@ -58,6 +58,7 @@ dependencies {
     implementation("com.google.android.gms:play-services-auth:20.7.0")
 
     implementation("androidx.biometric:biometric:1.2.0-alpha04")
+    implementation(libs.androidx.work.runtime.ktx)
 
     // Unit testing
     testImplementation ("junit:junit:4.13.2")

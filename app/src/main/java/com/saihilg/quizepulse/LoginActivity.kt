@@ -164,6 +164,8 @@ class LoginActivity : AppCompatActivity() {
         val email = etEmail.text.toString().trim()
         val password = etPassword.text.toString().trim()
 
+        val result = LoginValidator.validate(email, password)
+
         if (TextUtils.isEmpty(email)) {
             etEmail.error = "Enter email"
             return
